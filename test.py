@@ -1,8 +1,9 @@
-#test
-print("test")
-# 1231 23123 12
-# 23234 324 
 
-#aa
-#SDSFASDFASDFASDS
-#KHANG SUCKS DICK
+# {} == dictonary 
+ref = {"khang":"nguyen"} # key is the the username and value is the password
+username = input()
+
+if username in ref:
+    print("Hello ", username)
+else:
+    print("not in ref")
