@@ -8,15 +8,7 @@ from tkinter import ttk
 # GUI
 
 gui = Tk()
-gui.geometry("400x400")
-
-def login(us1,pw1,usr,pword):
-    if us1 == usr and pw1 == pword:
-        i=Label(gui,text='Login success').grid(row=6,column=0)
-        print("Login success")
-    else:
-        j=Label(gui,text='Login failed').grid(row=6,column=0)
-        print("Wrong password")
+gui.geometry("250x150")
 
 gui.title("LABron Pacemaker")
 
@@ -33,5 +25,13 @@ pword1 = Label(gui ,text="password").grid(row=4,column=0)
 u_entry1 = Entry(gui).grid(row=3,column=1)
 p_entry1 = Entry(gui,show="*").grid(row=4,column=1)
 loginButton = Button(gui,text="Login",command=lambda : login(u_entry,p_entry,u_entry1,p_entry1)).grid(row=5,column=0)
+
+def login(us1,pw1,usr,pword):
+    if us1 == usr and pw1 == pword:
+        i=Label(gui,text='Login success').grid(row=6,column=0)
+        print("Login success")
+    else:
+        j=Label(gui,text='Login failed').grid(row=6,column=0)
+        print("Wrong password")
 
 gui.mainloop() # displays GUI
