@@ -8,30 +8,41 @@ from tkinter import ttk
 # GUI
 
 gui = Tk()
-gui.geometry("250x150")
+gui.geometry("275x120")
 
 gui.title("LABron Pacemaker")
 
-# Create Account Section
-uname = Label(gui ,text="username").grid(row=0,column=0)
-pword = Label(gui ,text="password").grid(row=1,column=0)
-u_entry = Entry(gui).grid(row=0,column=1)
-p_entry = Entry(gui,show="*").grid(row=1,column=1)
-createButton = Button(gui,text="Create account").grid(row=2,column=0)
+ref={} # creates an empty dictionary
 
-# Login Section
-uname1 = Label(gui ,text="username").grid(row=3,column=0)
-pword1 = Label(gui ,text="password").grid(row=4,column=0)
-u_entry1 = Entry(gui).grid(row=3,column=1)
-p_entry1 = Entry(gui,show="*").grid(row=4,column=1)
-loginButton = Button(gui,text="Login",command=lambda : login(u_entry,p_entry,u_entry1,p_entry1)).grid(row=5,column=0)
+# Create new account
 
-def login(us1,pw1,usr,pword):
-    if us1 == usr and pw1 == pword:
-        i=Label(gui,text='Login success').grid(row=6,column=0)
-        print("Login success")
+def newUser(us,pw):
+    if len(ref) >= 10: 
+        i=Label(gui,text='Error only 10 users allowed').grid(row=5,column=0)
+        print("Error only 10 users allowed")
     else:
-        j=Label(gui,text='Login failed').grid(row=6,column=0)
-        print("Wrong password")
+        ref[us] = pw # adds new key--value pair into the dictonary 
+        j=Label(gui,text='New account created').grid(row=5,column=0)
+        print("New account created")
+
+# Login
+
+def login(us,pw):
+    for i in len(ref):
+        if us == ref[i] and pw1 == pword:
+            i=Label(gui,text='Login success').grid(row=5,column=0)
+            print("Login success")
+        else:
+            j=Label(gui,text='Login failed').grid(row=5,column=0)
+            print("Wrong password")
+
+# Layout
+
+uname = Label(gui ,text="username").grid(row=1,column=0)
+pword = Label(gui ,text="password").grid(row=2,column=0)
+u_entry = Entry(gui).grid(row=1,column=1)
+p_entry = Entry(gui,show="*").grid(row=2,column=1)
+createButton = Button(gui,text="Create account",command=lambda : newUser(u_entry,p_entry)).grid(row=3,column=0)
+loginButton = Button(gui,text="Login",command=lambda : login(u_entry,p_entry)).grid(row=4,column=0)
 
 gui.mainloop() # displays GUI
