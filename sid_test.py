@@ -1,6 +1,6 @@
 # GUI FOR THE DCM CONTROLLER 
 # KHANG, SID, AMITESH, DEREK
-# 3k04 milestone1
+# 3K04 Assignment #1
 
 from tkinter import *
 from tkinter import ttk
@@ -21,7 +21,7 @@ def newUser(us,pw):
         i=Label(gui,text='Error only 10 users allowed').grid(row=5,column=0)
         print("Error only 10 users allowed")
     else:
-        ref[us] = pw # adds new key--value pair into the dictonary 
+        ref[us] = pw # adds new key-value pair into the dictonary
         j=Label(gui,text='New account created').grid(row=5,column=0)
         print("New account created")
 
@@ -29,7 +29,7 @@ def newUser(us,pw):
 
 def login(us,pw):
     for i in len(ref):
-        if us == ref[i] and pw1 == pword:
+        if us == ref[i] and pw == ref[us]:
             i=Label(gui,text='Login success').grid(row=5,column=0)
             print("Login success")
         else:
