@@ -1,3 +1,4 @@
+import Tkinter
 from checkComm import *
 from getRef import *
 from loginUser import *
@@ -5,30 +6,55 @@ from login import *
 from register import *
 from registerUser import  *
            
-def main_screen():
+# def main_screen():
 
-    global screen # need it available in other functions so we make it global
+#  # need it available in other functions so we make it global
     
-    screen = Tk();# main screen 
-    screen.geometry("300x300") #window size
-    screen.title("DCM")
+#     screen = Tkinter.Tk();# main screen 
+#     screen.geometry("300x300") #window size
+#     screen.title("DCM")
     
-    Label (text = "LABRON PACEMAKER 1.0",width = "300", bg = "light grey",font =("Calibri",13)).pack() #packs in rows and columns
+#     Label(text = "PACEMAKER 1.0",width = "300", bg = "light grey",font =("Calibri",13)).grid(row=1) #packs in rows and columns
 
-    # creating register and login button
-    Label(text = "").pack()
-    Label(text = "").pack() 
-    Label(text = "").pack() #leaves a blank line from the Labron pacemaker 1.0 text
-    Button(text = "Login", height = "2", width = "10",command = Login).pack()
-    Label(text = "").pack()
-    Button(text= "Register", width = "10", height = "2",command = Register).pack()
-    Label(text = "").pack()
-    Label(text = "").pack()
-    if checkComm() == True:
-        Label(text = "Device is IS communicating with the DCM",fg = "green").pack()
-    elif checkComm() == False:
-        Label(text = "Device is NOT communicating with the DCM",fg ="red").pack()
-    
-    screen.mainloop()
+#     # # creating register and login button
 
-main_screen()
+#     Button(text = "Login", height = "2", width = "10").grid(row=2)
+#     Button(text= "Register", width = "10", height = "2").grid(row=3)
+#     # Button(text="Exit", command=quit).grid(row=3)
+
+#     # if checkComm() == True:
+#     #     Label(text = "Device is IS communicating with the DCM",fg = "green").pack()
+#     # elif checkComm() == False:
+#     #     Label(text = "Device is NOT communicating with the DCM",fg ="red").pack()
+    
+#     screen.mainloop()
+
+# main_screen()
+
+class main_screen:
+    def __init__(self, master):
+        self.master = master
+        master.title("PACEMAKER 1.0")
+
+        label = Label(master, text="Welcome to the PACEMAKER 1.0")
+        label.grid(row=0, column=0)
+
+        self.login_button = Button(master, text="Login", command=login(screen))
+        self.login_button.grid(row=1, column=0)
+
+        self.register_button = Button(master, text="Register", command=register)
+        self.register_button.grid(row=2, column=0)
+
+        self.exit_button = Button(master, text="Exit", command=master.quit)
+        self.exit_button.grid(row=3, column=0)
+
+        master.columnconfigure(0, weight=1)
+        master.rowconfigure(0, weight=1)
+        self.login_button.columnconfigure(0, weight=1)
+        self.register_button.columnconfigure(0, weight=1)
+        self.exit_button.columnconfigure(0, weight=1)
+
+screen = Tk()
+screen.geometry("300x300")
+main_screen(screen)
+screen.mainloop()

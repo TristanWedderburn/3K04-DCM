@@ -1,6 +1,6 @@
 from Tkinter import *
 
-def login():
+def login(screen):
 
     global usernameInput
     global passwordInput
@@ -20,4 +20,4 @@ def login():
     passwordLogin = Entry(screen2,textvariable = passwordInput)
     passwordLogin.pack()
     Label(screen2,text = "").pack()
-    Button(screen2, text = "Login",width ="10", height ="1",command = Login_User).pack()
+    # Button(screen2, text = "Login",width ="10", height ="1",command = Login_User).pack()
