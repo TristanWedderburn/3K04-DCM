@@ -31,23 +31,21 @@ from registerUser import  *
 
 # main_screen()
 
-class StartPage(Frame):
+class StartPage(Tk):
 	def __init__(self, parent, controller):
-		Frame.__init__(self, parent)
+		Tk._init__(self, parent)
 
-        parent.title("PACEMAKER 1.0")
-
-        label = Label(master, text="Welcome to the PACEMAKER 1.0")
+        label = Label(text="Welcome to the PACEMAKER 1.0")
         label.grid(row=0, column=0)
 
-        self.login_button = Button(master, text="Login")
-        self.login_button.grid(row=1, column=0)
+        login_button = Button(text="Login")
+        login_button.grid(row=1, column=0)
 
-        self.register_button = Button(master, text="Register")
-        self.register_button.grid(row=2, column=0)
+        register_button = Button( text="Register")
+        register_button.grid(row=2, column=0)
 
-        self.exit_button = Button(master, text="Exit", command=master.quit)
-        self.exit_button.grid(row=3, column=0)
+        exit_button = Button( text="Exit", command=quit)
+        exit_button.grid(row=3, column=0)
 
         # if checkComm() == True:
         Label(text = "Device is IS communicating with the DCM").grid(row=4, column=0)
@@ -55,12 +53,6 @@ class StartPage(Frame):
         # elif checkComm() == False:
         Label(text = "Device is NOT communicating with the DCM").grid(row=5, column=0)
         Label(text ="o",fg = "red").grid(row=5, column=1)
-
-        master.columnconfigure(0, weight=1)
-        master.rowconfigure(0, weight=1)
-        self.login_button.columnconfigure(0, weight=1)
-        self.register_button.columnconfigure(0, weight=1)
-        self.exit_button.columnconfigure(0, weight=1)
 
 # class main_screen:
 #     def __init__(self, master):

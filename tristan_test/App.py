@@ -1,30 +1,4 @@
 from Tkinter import *
-# from MainMenu import MainMenu
-
-# class App(Tk):
-# 	def __init__(self, *args, **kwargs):
-# 		Tk.__init__(self, *args, **kwargs)
-
-# 		#Setup Frame
-# 		container = Frame(self)
-# 		container.pack(side="top", fill="both", expand=True)
-# 		container.grid_rowconfigure(0, weight=1)
-# 		container.grid_columnconfigure(0, weight=1)
-
-# 		self.frames = {}
-
-# 		for F in (StartPage, PageOne, PageTwo):
-# 			frame = F(container, self)
-# 			self.frames[F] = frame
-# 			frame.grid(row=0, column=0, sticky="nsew")
-
-# 		self.show_frame(StartPage)	
-# 	def show_frame(self, context):
-# 		frame = self.frames[context]
-# 		frame.tkraise()
-
-# app = App()
-# app.mainloop()
 
 class App(Tk):
 	def __init__(self, *args, **kwargs):
@@ -39,7 +13,7 @@ class App(Tk):
 
 		self.frames = {}
 
-		for F in (StartPage, PageOne, PageTwo):
+		for F in (StartPage, PageOne, PageTwo, PageThree):
 			frame = F(container, self)
 			self.frames[F] = frame
 			frame.grid(row=0, column=0, sticky="nsew")
@@ -64,23 +38,27 @@ class PageOne(Frame):
 	def __init__(self, parent, controller):
 		Frame.__init__(self, parent)
 
-		label = Label(self, text="Page One")
+		label = Label(self, text="Log In")
 		label.pack(padx=10, pady=10)
-		start_page = Button(self, text="Start Page", command=lambda:controller.show_frame(StartPage))
-		start_page.pack()
-		page_two = Button(self, text="Page Two", command=lambda:controller.show_frame(PageTwo))
-		page_two.pack()
+        page_one = Button(self, text="Log In", command=lambda:controller.show_frame(PageOne))
+        page_one.pack()
+
 
 class PageTwo(Frame):
 	def __init__(self, parent, controller):
 		Frame.__init__(self, parent)
 
-		label = Label(self, text="Page Two")
+		label = Label(self, text="Register")
 		label.pack(padx=10, pady=10)
-		start_page = Button(self, text="Start Page", command=lambda:controller.show_frame(StartPage))
-		start_page.pack()
-		page_one = Button(self, text="Page One", command=lambda:controller.show_frame(PageOne))
+        page_one = Button(self, text="Register", command=lambda:controller.show_frame(PageOne))
 		page_one.pack()
+
+class PageThree(Frame):
+	def __init__(self, parent, controller):
+		Frame.__init__(self, parent)
+
+		label = Label(self, text="Welcome User")
+		label.pack(padx=10, pady=10)
 
 class MainMenu:
 	def __init__(self, master):
