@@ -29,9 +29,9 @@ class StartPage(Frame):
 
 		label = Label(self, text="Start Page")
 		label.pack(padx=10, pady=10)
-		page_one = Button(self, text="Page One", command=lambda:controller.show_frame(PageOne))
+		page_one = Button(self, text="Log In", command=lambda:controller.show_frame(PageOne))
 		page_one.pack()
-		page_two = Button(self, text="Page Two", command=lambda:controller.show_frame(PageTwo))
+		page_two = Button(self, text="Register", command=lambda:controller.show_frame(PageTwo))
 		page_two.pack()
 
 class PageOne(Frame):
