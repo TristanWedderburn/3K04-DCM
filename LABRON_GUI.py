@@ -1,8 +1,5 @@
 from tkinter import *
 
-
-
-
 def Register_User():
     username_info = username.get()
     password_info = password.get()
@@ -109,13 +106,13 @@ def checkCommunication():
            
 def main_screen():
 
-    global screen # need it avalbe in other functions so we make it global
+    global screen # need it available in other functions so we make it global
     
     screen = Tk();# main screen 
     screen.geometry("300x300") #window size
     screen.title("DCM")
     
-    Label (text = "LABBRON PACEMAKER 1.0",width = "300", bg = "light grey",font =("Calibri",13)).pack() #packs in rows and columns
+    Label (text = "LABRON PACEMAKER 1.0",width = "300", bg = "light grey",font =("Calibri",13)).pack() #packs in rows and columns
 
     # creating register and login button
     Label(text = "").pack()
