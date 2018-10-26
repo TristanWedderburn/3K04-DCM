@@ -37,11 +37,10 @@ class StartPage(Frame):
 class PageOne(Frame):
 	def __init__(self, parent, controller):
 		Frame.__init__(self, parent)
-
 		label = Label(self, text="Log In")
 		label.pack(padx=10, pady=10)
-        log_in = Button(self, text="Log In", command=lambda:controller.show_frame(PageOne))
-        log_in.pack()
+		log_in = Button(self, text="Log In", command=lambda:controller.show_frame(PageThree))
+		log_in.pack()
 
 class PageTwo(Frame):
 	def __init__(self, parent, controller):
@@ -49,7 +48,7 @@ class PageTwo(Frame):
 
 		label = Label(self, text="Register")
 		label.pack(padx=10, pady=10)
-        register = Button(self, text="Register", command=lambda:controller.show_frame(PageOne))
+        register = Button(self, text="Register", command=lambda:controller.show_frame(StartPage))
         register.pack()
 
 class PageThree(Frame):
