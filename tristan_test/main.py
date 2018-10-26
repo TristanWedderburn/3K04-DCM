@@ -1,5 +1,3 @@
-from tkinter import *
-
 from checkComm import *
 from getRef import *
 from loginUser import *
