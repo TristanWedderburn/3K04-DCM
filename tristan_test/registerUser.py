@@ -1,4 +1,4 @@
-from tkinter import *
+from Tkinter import *
 
 def registerUser():
     username_info = username.get()
