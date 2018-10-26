@@ -25,4 +25,4 @@ def registerUser():
         username_entry.delete(0,END) #once information is stored in the textfile the data in the password and username textbox are deleted
         password_entry.delete(0,END)
 
-        Label(screen1,text = "Registration Successful", fg = "green").pack()
+        Label(register_screen,text = "Registration Successful", fg = "green").pack()

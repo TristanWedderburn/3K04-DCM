@@ -25,14 +25,14 @@ def Register_User():
         username_entry.delete(0,END) #once information is stored in the textfile the data in the password and username textbox are deleted
         password_entry.delete(0,END)
 
-        Label(screen1,text = "Registration Successful", fg = "green").pack()
+        Label(register_screen,text = "Registration Successful", fg = "green").pack()
     
     
 def Register():
-    global screen1
-    screen1 = Toplevel(screen) # means creates a new empty screen  
-    screen1.title("Register")
-    screen1.geometry("300x300")# window size size
+    global register_screen
+    register_screen = Toplevel(screen) # means creates a new empty screen  
+    register_screen.title("Register")
+    register_screen.geometry("300x300")# window size size
     global username
     global password
     global username_entry
@@ -40,16 +40,16 @@ def Register():
     username = StringVar() #must be string
     password = StringVar() #must be string
 
-    Label(screen1,text = "Please Enter details below: ").pack()
-    Label(screen1,text = "").pack()
-    Label(screen1,text = "Username *").pack() # intialize which screen you want text to show up
-    username_entry = Entry(screen1,textvariable = username)
+    Label(register_screen,text = "Please Enter details below: ").pack()
+    Label(register_screen,text = "").pack()
+    Label(register_screen,text = "Username *").pack() # intialize which screen you want text to show up
+    username_entry = Entry(register_screen,textvariable = username)
     username_entry.pack()#entry is a textbox
-    Label(screen1,text = "Password *").pack()
-    password_entry = Entry(screen1,textvariable = password)
+    Label(register_screen,text = "Password *").pack()
+    password_entry = Entry(register_screen,textvariable = password)
     password_entry.pack()# whatever text is entered in the entry is stored in variable password
-    Label(screen1,text = "").pack()
-    Button(screen1, text = "Regsiter",width ="10", height ="1",command = Register_User).pack()
+    Label(register_screen,text = "").pack()
+    Button(register_screen, text = "Regsiter",width ="10", height ="1",command = Register_User).pack()
  
 def Login():
 
