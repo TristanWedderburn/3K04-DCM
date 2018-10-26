@@ -43,7 +43,6 @@ class PageOne(Frame):
         page_one = Button(self, text="Log In", command=lambda:controller.show_frame(PageOne))
         page_one.pack()
 
-
 class PageTwo(Frame):
 	def __init__(self, parent, controller):
 		Frame.__init__(self, parent)
@@ -67,7 +66,6 @@ class MainMenu:
 		filemenu.add_command(label="Exit", command=master.quit)
 		menubar.add_cascade(label="File", menu=filemenu)
 		master.config(menu=menubar)
-
 
 app = App()
 app.mainloop()
