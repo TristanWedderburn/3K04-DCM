@@ -45,16 +45,14 @@ class PageOne(Frame):
 class PageTwo(Frame):
 	def __init__(self, parent, controller):
 		Frame.__init__(self, parent)
-
 		label = Label(self, text="Register")
 		label.pack(padx=10, pady=10)
-        register = Button(self, text="Register", command=lambda:controller.show_frame(StartPage))
-        register.pack()
+		register = Button(self, text="Register", command=lambda:controller.show_frame(StartPage))
+		register.pack()
 
 class PageThree(Frame):
 	def __init__(self, parent, controller):
 		Frame.__init__(self, parent)
-
 		page_three = Label(self, text="Welcome User")
 		page_three.pack(padx=10, pady=10)
 
