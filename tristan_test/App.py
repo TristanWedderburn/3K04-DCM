@@ -50,7 +50,7 @@ class PageTwo(Frame):
 		label = Label(self, text="Register")
 		label.pack(padx=10, pady=10)
         page_one = Button(self, text="Register", command=lambda:controller.show_frame(PageOne))
-		page_one.pack()
+        page_one.pack()
 
 class PageThree(Frame):
 	def __init__(self, parent, controller):
