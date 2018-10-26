@@ -48,6 +48,11 @@ class main_screen:
         self.exit_button = Button(master, text="Exit", command=master.quit)
         self.exit_button.grid(row=3, column=0)
 
+        # if checkComm() == True:
+            Label(text = "Device is IS communicating with the DCM",fg = "green").grid(row=4)
+        # elif checkComm() == False:
+            Label(text = "Device is NOT communicating with the DCM",fg ="red").grid(row=5)
+
         master.columnconfigure(0, weight=1)
         master.rowconfigure(0, weight=1)
         self.login_button.columnconfigure(0, weight=1)
