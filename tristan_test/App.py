@@ -99,8 +99,7 @@ class PageOne(Frame):#login page
                         if userPassRef[usernameInput] == passwordInput:
                                 print("logging in user ok")
                                #how to open new screen
-                                
-                                
+                               
                         else:
                                 print("wrong password")
                 else:
