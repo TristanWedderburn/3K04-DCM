@@ -81,7 +81,6 @@ class PageOne(Frame):#login page
                 return userPassRef
 
         def Login_User(self,usernameInput,passwordInput):
-
                 userPassRef = self.getRef()
                 if usernameInput in userPassRef:
                         if userPassRef[usernameInput] == passwordInput:
