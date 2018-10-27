@@ -1,0 +1,8 @@
+p_pacingState 23
+p_pacingMod 23
+p_hysteresis 23
+p_hysteresisInterval 23
+p_lowrateInterval 23
+p_vPaceAmp 23
+p_vPaceWidth 23
+p_vVRP 23
