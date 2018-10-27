@@ -93,66 +93,6 @@ class PageOne(Frame):#login page
                         print("User does not exist")
                         return False
                         
-        # def PostLoginScreen(self):
-                
-        #         screen = Toplevel()
-        #         p_pacingState =StringVar()
-        #         p_pacingMode = StringVar()
-        #         p_hysteresis = StringVar()
-        #         p_hysteresisInterval = StringVar()
-        #         p_lowrateInterval =StringVar()
-        #         p_vPaceAmp = StringVar()
-        #         p_vPaceWidth = StringVar()
-        #         p_vVRP = StringVar()
-        #         Label(screen, text=" ").grid(row=0, column=0)
-        #         Label(screen, text="Parameters",font=("Calibri",15)).grid(row=0, column=0,pady=20)
-        #         Label(screen, text="p_pacingState").grid(row=1, column=0)
-        #         Entry(screen,textvariable = p_pacingState).grid(row=1, column=1)
-        #         Label(screen, text="p_pacingMode").grid(row=2, column=0)
-        #         Entry(screen,textvariable = p_pacingMode).grid(row=2, column=1)
-        #         Label(screen, text="p_hysteresis").grid(row=3, column=0)
-        #         Entry(screen,textvariable = p_hysteresis).grid(row=3, column=1)
-        #         Label(screen, text="p_hysteresisInterval").grid(row=4, column=0)
-        #         Entry(screen,textvariable = p_hysteresisInterval).grid(row=4, column=1)
-        #         Label(screen, text="p_lowrateInterval").grid(row=5, column=0)
-        #         Entry(screen,textvariable = p_lowrateInterval).grid(row=5, column=1)
-        #         Label(screen, text="p_vPaceAmp").grid(row=6, column=0)
-        #         Entry(screen,textvariable = p_vPaceAmp).grid(row=6, column=1)
-        #         Label(screen, text="p_vPaceWidth").grid(row=7, column=0)
-        #         Entry(screen,textvariable = p_vPaceWidth).grid(row=7, column=1)
-        #         Label(screen, text="p_vVRP").grid(row=8, column=0)
-        #         Entry(screen,textvariable = p_vVRP).grid(row=8, column=1)
-                
-        #         Button(screen, text="Update Paramters", command= lambda: self.updateParameters(p_pacingState.get(), p_pacingMode.get(),p_hysteresis.get(),p_hysteresisInterval.get(),p_lowrateInterval.get(),p_vPaceAmp.get(),p_vPaceWidth.get(),p_vVRP.get())).grid(row=9,column=1)
-
-        #         def checkComm(self):
-        #                 return False
-        #         if checkComm(self) == True:
-                        
-        #                 Label(screen,text = "Device is IS communicating with the DCM").grid(row=10, column=0,pady=20)
-        #                 Label(screen,text ="o",fg = "green").grid(row=10, column=1,pady=20)
-        #         elif checkComm(self) == False:
-        #                 Label(screen,text = "Device is NOT communicating with the DCM").grid(row=11, column=0,pady=20)
-        #                 Label(screen,text ="o",fg = "red").grid(row=11, column=1,pady=20)
-
-        # def updateParameters(self, p_pacingState, p_pacingMod,p_hysteresis,p_hysteresisInterval,p_lowrateInterval,p_vPaceAmp,p_vPaceWidth,p_vVRP):
-                
-        #         file = open("paramters_info.txt","w")
-        #         file.writelines(["p_pacingState"+" "+p_pacingState+'\n',
-        #                  "p_pacingMod"+" "+p_pacingMod+'\n'
-        #                  "p_hysteresis"+" "+p_hysteresis+'\n'
-        #                  "p_hysteresisInterval"+" "+p_hysteresisInterval+'\n'
-        #                  "p_lowrateInterval"+" "+p_lowrateInterval+'\n'
-        #                  "p_vPaceAmp"+" "+p_vPaceAmp+'\n'
-        #                  "p_vPaceWidth"+" "+p_vPaceWidth+'\n'
-        #                  "p_vVRP"+" "+p_vVRP+'\n'])
-        #         file.close()
-
-        #         win = Toplevel()
-        #         win.geometry('150x150')
-        #         win.title("Updated Paramters")
-        #         Label(win, text="Paramters Updated",font =("Calibri",15),fg="green").grid(row=15,column=5)
-
 class PageTwo(Frame):#register
 
         def __init__(self, parent, controller):
