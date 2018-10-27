@@ -1,5 +1,4 @@
-from tkinter import *
-
+from Tkinter import *
 
 class App(Tk):
         
@@ -14,20 +13,16 @@ class App(Tk):
                 
 		self.frames = {}
                 
-		for F in (StartPage, PageOne, PageTwo):
+		for F in (StartPage, PageOne, PageTwo, PageThree):
 			frame = F(container, self)
 			self.frames[F] = frame
 			frame.grid(row=0, column=0, sticky="nsew")
 
 		self.show_frame(StartPage)
         
-		
 	def show_frame(self, context):
 		frame = self.frames[context]
 		frame.tkraise()
-
-
-
 
 class StartPage(Frame):
 	def __init__(self, parent, controller):
@@ -45,9 +40,10 @@ class StartPage(Frame):
 		page_two.pack()
 
 class PageOne(Frame):#login page
-        
         def __init__(self, parent, controller):
+                self.controller = controller
                 Frame.__init__(self, parent)
+
                 usernameInput = StringVar()
                 passwordInput = StringVar()
                 Label(self, text=" ").pack()
@@ -59,19 +55,21 @@ class PageOne(Frame):#login page
                 username_Entry = Entry(self,textvariable = usernameInput)
                 username_Entry.pack()
                 Label(self, text="Password *").pack()
-                password_Entry = Entry(self,textvariable = passwordInput,show ="*").pack()
+                Entry(self,textvariable = passwordInput,show ="*").pack()
                 Label(self, text=" ").pack()
                 Label(self, text=" ").pack()
                 returnToMain = Button(self, text="Main Menu", command=lambda:controller.show_frame(StartPage))
                 Label(self, text=" ").pack()
                 LoginCurrentUser = Button(self, text="Log In", command=lambda:self.Login_User(usernameInput.get(),passwordInput.get()))
+                                # return controller.show_frame(PostLoginScreen)
                 returnToMain.pack()
                 LoginCurrentUser.pack()
-                user = usernameInput
-                
-        
-        def getuser(self):
-                return user
+                # user = usernameInput
+                  
+        # def getuser(self):
+        #         return user
+        def next_page(self,next):
+                        self.controller.show_frame(next)
 
         def getRef(self):
                 userPassRef={}
@@ -79,94 +77,82 @@ class PageOne(Frame):#login page
                 for line in f.readlines():
                         loginInfo = line.split(" ")
                         userPassRef[loginInfo[0]] = loginInfo[1].strip("\n")
-                        
-
                 f.close()
-        
                 return userPassRef
-
 
         def Login_User(self,usernameInput,passwordInput):
 
                 userPassRef = self.getRef()
                 if usernameInput in userPassRef:
                         if userPassRef[usernameInput] == passwordInput:
-                                print("logging in user ok")
-                                self.destroy()
-                                StartPage.destroy(self)
-                                self.PostLoginScreen()
-                                
-                                
+                                print("Logged in")
+                                return self.next_page(PageThree)
                         else:
-                                print("wrong password")
+                                print("Incorrect password")
+                                return False
                 else:
-                        print("no user")
-
-                        
-        def PostLoginScreen(self):
-                
-                screen = Toplevel()
-                p_pacingState =StringVar()
-                p_pacingMode = StringVar()
-                p_hysteresis = StringVar()
-                p_hysteresisInterval = StringVar()
-                p_lowrateInterval =StringVar()
-                p_vPaceAmp = StringVar()
-                p_vPaceWidth = StringVar()
-                p_vVRP = StringVar()
-                Label(screen, text=" ").grid(row=0, column=0)
-                Label(screen, text="Parameters",font=("Calibri",15)).grid(row=0, column=0,pady=20)
-                Label(screen, text="p_pacingState").grid(row=1, column=0)
-                Entry(screen,textvariable = p_pacingState).grid(row=1, column=1)
-                Label(screen, text="p_pacingMode").grid(row=2, column=0)
-                Entry(screen,textvariable = p_pacingMode).grid(row=2, column=1)
-                Label(screen, text="p_hysteresis").grid(row=3, column=0)
-                Entry(screen,textvariable = p_hysteresis).grid(row=3, column=1)
-                Label(screen, text="p_hysteresisInterval").grid(row=4, column=0)
-                Entry(screen,textvariable = p_hysteresisInterval).grid(row=4, column=1)
-                Label(screen, text="p_lowrateInterval").grid(row=5, column=0)
-                Entry(screen,textvariable = p_lowrateInterval).grid(row=5, column=1)
-                Label(screen, text="p_vPaceAmp").grid(row=6, column=0)
-                Entry(screen,textvariable = p_vPaceAmp).grid(row=6, column=1)
-                Label(screen, text="p_vPaceWidth").grid(row=7, column=0)
-                Entry(screen,textvariable = p_vPaceWidth).grid(row=7, column=1)
-                Label(screen, text="p_vVRP").grid(row=8, column=0)
-                Entry(screen,textvariable = p_vVRP).grid(row=8, column=1)
-                updateParamaters = Button(screen, text="Update Paramters", command= lambda: self.UpdateParamters(p_pacingState.get(), p_pacingMode.get(),p_hysteresis.get(),p_hysteresisInterval.get(),p_lowrateInterval.get(),p_vPaceAmp.get(),p_vPaceWidth.get(),p_vVRP.get())).grid(row=9,column=1)
-
-                def checkComm(self):
+                        print("User does not exist")
                         return False
-                if checkComm(self) == True:
                         
-                        Label(screen,text = "Device is IS communicating with the DCM").grid(row=10, column=0,pady=20)
-                        Label(screen,text ="o",fg = "green").grid(row=10, column=1,pady=20)
-                elif checkComm(self) == False:
-                        Label(screen,text = "Device is NOT communicating with the DCM").grid(row=11, column=0,pady=20)
-                        Label(screen,text ="o",fg = "red").grid(row=11, column=1,pady=20)
-
-        def UpdateParamters(self, p_pacingState, p_pacingMod,p_hysteresis,p_hysteresisInterval,p_lowrateInterval,p_vPaceAmp,p_vPaceWidth,p_vVRP):
+        # def PostLoginScreen(self):
                 
-                file = open("paramters_info.txt","w")
-                file.writelines(["p_pacingState"+" "+p_pacingState+'\n',
-                         "p_pacingMod"+" "+p_pacingMod+'\n'
-                         "p_hysteresis"+" "+p_hysteresis+'\n'
-                         "p_hysteresisInterval"+" "+p_hysteresisInterval+'\n'
-                         "p_lowrateInterval"+" "+p_lowrateInterval+'\n'
-                         "p_vPaceAmp"+" "+p_vPaceAmp+'\n'
-                         "p_vPaceWidth"+" "+p_vPaceWidth+'\n'
-                         "p_vVRP"+" "+p_vVRP+'\n'])
-                file.close()
-
-                win = Toplevel()
-                win.geometry('150x150')
-                win.title("Updated Paramters")
-                Label(win, text="Paramters Updated",font =("Calibri",15),fg="green").grid(row=15,column=5)
-
-
-
-
-
+        #         screen = Toplevel()
+        #         p_pacingState =StringVar()
+        #         p_pacingMode = StringVar()
+        #         p_hysteresis = StringVar()
+        #         p_hysteresisInterval = StringVar()
+        #         p_lowrateInterval =StringVar()
+        #         p_vPaceAmp = StringVar()
+        #         p_vPaceWidth = StringVar()
+        #         p_vVRP = StringVar()
+        #         Label(screen, text=" ").grid(row=0, column=0)
+        #         Label(screen, text="Parameters",font=("Calibri",15)).grid(row=0, column=0,pady=20)
+        #         Label(screen, text="p_pacingState").grid(row=1, column=0)
+        #         Entry(screen,textvariable = p_pacingState).grid(row=1, column=1)
+        #         Label(screen, text="p_pacingMode").grid(row=2, column=0)
+        #         Entry(screen,textvariable = p_pacingMode).grid(row=2, column=1)
+        #         Label(screen, text="p_hysteresis").grid(row=3, column=0)
+        #         Entry(screen,textvariable = p_hysteresis).grid(row=3, column=1)
+        #         Label(screen, text="p_hysteresisInterval").grid(row=4, column=0)
+        #         Entry(screen,textvariable = p_hysteresisInterval).grid(row=4, column=1)
+        #         Label(screen, text="p_lowrateInterval").grid(row=5, column=0)
+        #         Entry(screen,textvariable = p_lowrateInterval).grid(row=5, column=1)
+        #         Label(screen, text="p_vPaceAmp").grid(row=6, column=0)
+        #         Entry(screen,textvariable = p_vPaceAmp).grid(row=6, column=1)
+        #         Label(screen, text="p_vPaceWidth").grid(row=7, column=0)
+        #         Entry(screen,textvariable = p_vPaceWidth).grid(row=7, column=1)
+        #         Label(screen, text="p_vVRP").grid(row=8, column=0)
+        #         Entry(screen,textvariable = p_vVRP).grid(row=8, column=1)
                 
+        #         Button(screen, text="Update Paramters", command= lambda: self.updateParameters(p_pacingState.get(), p_pacingMode.get(),p_hysteresis.get(),p_hysteresisInterval.get(),p_lowrateInterval.get(),p_vPaceAmp.get(),p_vPaceWidth.get(),p_vVRP.get())).grid(row=9,column=1)
+
+        #         def checkComm(self):
+        #                 return False
+        #         if checkComm(self) == True:
+                        
+        #                 Label(screen,text = "Device is IS communicating with the DCM").grid(row=10, column=0,pady=20)
+        #                 Label(screen,text ="o",fg = "green").grid(row=10, column=1,pady=20)
+        #         elif checkComm(self) == False:
+        #                 Label(screen,text = "Device is NOT communicating with the DCM").grid(row=11, column=0,pady=20)
+        #                 Label(screen,text ="o",fg = "red").grid(row=11, column=1,pady=20)
+
+        # def updateParameters(self, p_pacingState, p_pacingMod,p_hysteresis,p_hysteresisInterval,p_lowrateInterval,p_vPaceAmp,p_vPaceWidth,p_vVRP):
+                
+        #         file = open("paramters_info.txt","w")
+        #         file.writelines(["p_pacingState"+" "+p_pacingState+'\n',
+        #                  "p_pacingMod"+" "+p_pacingMod+'\n'
+        #                  "p_hysteresis"+" "+p_hysteresis+'\n'
+        #                  "p_hysteresisInterval"+" "+p_hysteresisInterval+'\n'
+        #                  "p_lowrateInterval"+" "+p_lowrateInterval+'\n'
+        #                  "p_vPaceAmp"+" "+p_vPaceAmp+'\n'
+        #                  "p_vPaceWidth"+" "+p_vPaceWidth+'\n'
+        #                  "p_vVRP"+" "+p_vVRP+'\n'])
+        #         file.close()
+
+        #         win = Toplevel()
+        #         win.geometry('150x150')
+        #         win.title("Updated Paramters")
+        #         Label(win, text="Paramters Updated",font =("Calibri",15),fg="green").grid(row=15,column=5)
 
 class PageTwo(Frame):#register
 
@@ -210,85 +196,69 @@ class PageTwo(Frame):#register
                         file.write(username_info +" "+password_info+"\n")
                         file.close()
                         Label(self,text = "Registration Successful", fg = "green").pack()
-    
 
+class PageThree(Frame):#postLoginScreen
+       def __init__(self, parent, controller):
+               Frame.__init__(self, parent)
 
-##class PageThree(Frame):#postLoginScreen
-##        def __init__(self, parent, controller):
-##                Frame.__init__(self, parent)
-##
-##                p_pacingState =StringVar()
-##                p_pacingMode = StringVar()
-##                p_hysteresis = StringVar()
-##                p_hysteresisInterval = StringVar()
-##                p_lowrateInterval =StringVar()
-##                p_vPaceAmp = StringVar()
-##                p_vPaceWidth = StringVar()
-##                p_vVRP = StringVar()
-##
-##                def checkComm(self):
-##                        return False
-##
-##                Label(self, text=" ").grid(row=0, column=0)
-##                Label(self, text="Parameters",font=("Calibri",15)).grid(row=0, column=0,pady=20)
-##                Label(self, text="p_pacingState").grid(row=1, column=0)
-##                Entry(self,textvariable = p_pacingState).grid(row=1, column=1)
-##                Label(self, text="p_pacingMode").grid(row=2, column=0)
-##                Entry(self,textvariable = p_pacingMode).grid(row=2, column=1)
-##                Label(self, text="p_hysteresis").grid(row=3, column=0)
-##                Entry(self,textvariable = p_hysteresis).grid(row=3, column=1)
-##                Label(self, text="p_hysteresisInterval").grid(row=4, column=0)
-##                Entry(self,textvariable = p_hysteresisInterval).grid(row=4, column=1)
-##                Label(self, text="p_lowrateInterval").grid(row=5, column=0)
-##                Entry(self,textvariable = p_lowrateInterval).grid(row=5, column=1)
-##                Label(self, text="p_vPaceAmp").grid(row=6, column=0)
-##                Entry(self,textvariable = p_vPaceAmp).grid(row=6, column=1)
-##                Label(self, text="p_vPaceWidth").grid(row=7, column=0)
-##                Entry(self,textvariable = p_vPaceWidth).grid(row=7, column=1)
-##                Label(self, text="p_vVRP").grid(row=8, column=0)
-##                Entry(self,textvariable = p_vVRP).grid(row=8, column=1)
-##                updateParamaters = Button(self, text="Update Paramters", command= lambda: self.UpdateParamters(p_pacingState.get(), p_pacingMode.get(),p_hysteresis.get(),p_hysteresisInterval.get(),p_lowrateInterval.get(),p_vPaceAmp.get(),p_vPaceWidth.get(),p_vVRP.get())).grid(row=9,column=1)
-##                
-##                if checkComm(self) == True:
-##                        
-##                        Label(self,text = "Device is IS communicating with the DCM").grid(row=10, column=0,pady=20)
-##                        Label(self,text ="o",fg = "green").grid(row=10, column=1,pady=20)
-##                elif checkComm(self) == False:
-##                        Label(self,text = "Device is NOT communicating with the DCM").grid(row=11, column=0,pady=20)
-##                        Label(self,text ="o",fg = "red").grid(row=11, column=1,pady=20)
-##
-##        def UpdateParamters(self, p_pacingState, p_pacingMod,p_hysteresis,p_hysteresisInterval,p_lowrateInterval,p_vPaceAmp,p_vPaceWidth,p_vVRP):
-##
-##                file = open("paramters_info.txt","w")
-##                file.writelines(["p_pacingState"+" "+p_pacingState+'\n',
-##                                 "p_pacingMod"+" "+p_pacingMod+'\n'
-##                                 "p_hysteresis"+" "+p_hysteresis+'\n'
-##                                 "p_hysteresisInterval"+" "+p_hysteresisInterval+'\n'
-##                                 "p_lowrateInterval"+" "+p_lowrateInterval+'\n'
-##                                 "p_vPaceAmp"+" "+p_vPaceAmp+'\n'
-##                                 "p_vPaceWidth"+" "+p_vPaceWidth+'\n'
-##                                 "p_vVRP"+" "+p_vVRP+'\n'])
-##                
-##                
-##                file.close()
-##        
-##                win = Tk()
-##                win.geometry('150x150')
-##                win.title("Updated Paramters")
-##                Label(win, text="Paramters Updated",font =("Calibri",15),fg="green").grid(row=15,column=5)
-##                
+               p_pacingState =StringVar()
+               p_pacingMode = StringVar()
+               p_hysteresis = StringVar()
+               p_hysteresisInterval = StringVar()
+               p_lowrateInterval =StringVar()
+               p_vPaceAmp = StringVar()
+               p_vPaceWidth = StringVar()
+               p_vVRP = StringVar()
 
+               def checkComm(self):
+                       return False
 
-        
+               Label(self, text=" ").grid(row=0, column=0)
+               Label(self, text="Parameters",font=("Calibri",15)).grid(row=0, column=0,pady=20)
+               Label(self, text="p_pacingState").grid(row=1, column=0)
+               Entry(self,textvariable = p_pacingState).grid(row=1, column=1)
+               Label(self, text="p_pacingMode").grid(row=2, column=0)
+               Entry(self,textvariable = p_pacingMode).grid(row=2, column=1)
+               Label(self, text="p_hysteresis").grid(row=3, column=0)
+               Entry(self,textvariable = p_hysteresis).grid(row=3, column=1)
+               Label(self, text="p_hysteresisInterval").grid(row=4, column=0)
+               Entry(self,textvariable = p_hysteresisInterval).grid(row=4, column=1)
+               Label(self, text="p_lowrateInterval").grid(row=5, column=0)
+               Entry(self,textvariable = p_lowrateInterval).grid(row=5, column=1)
+               Label(self, text="p_vPaceAmp").grid(row=6, column=0)
+               Entry(self,textvariable = p_vPaceAmp).grid(row=6, column=1)
+               Label(self, text="p_vPaceWidth").grid(row=7, column=0)
+               Entry(self,textvariable = p_vPaceWidth).grid(row=7, column=1)
+               Label(self, text="p_vVRP").grid(row=8, column=0)
+               Entry(self,textvariable = p_vVRP).grid(row=8, column=1)
 
-                
-                
+               Button(self, text="Update Parameters", command= lambda: self.updateParameters(p_pacingState.get(), p_pacingMode.get(),p_hysteresis.get(),p_hysteresisInterval.get(),p_lowrateInterval.get(),p_vPaceAmp.get(),p_vPaceWidth.get(),p_vVRP.get())).grid(row=9,column=1)
+               
+               if checkComm(self) == True:
+                       Label(self,text = "Device is IS communicating with the DCM").grid(row=10, column=0,pady=20)
+                       Label(self,text ="o",fg = "green").grid(row=10, column=1,pady=20)
+               elif checkComm(self) == False:
+                       Label(self,text = "Device is NOT communicating with the DCM").grid(row=11, column=0,pady=20)
+                       Label(self,text ="o",fg = "red").grid(row=11, column=1,pady=20)
 
-                
+       def updateParameters(self, p_pacingState, p_pacingMod,p_hysteresis,p_hysteresisInterval,p_lowrateInterval,p_vPaceAmp,p_vPaceWidth,p_vVRP):
 
-
-
-
-
+               file = open("paramters_info.txt","w")
+               file.writelines(["p_pacingState"+" "+p_pacingState+'\n',
+                                "p_pacingMod"+" "+p_pacingMod+'\n'
+                                "p_hysteresis"+" "+p_hysteresis+'\n'
+                                "p_hysteresisInterval"+" "+p_hysteresisInterval+'\n'
+                                "p_lowrateInterval"+" "+p_lowrateInterval+'\n'
+                                "p_vPaceAmp"+" "+p_vPaceAmp+'\n'
+                                "p_vPaceWidth"+" "+p_vPaceWidth+'\n'
+                                "p_vVRP"+" "+p_vVRP+'\n'])
+               
+               file.close()
+       
+               win = Tk()
+               win.geometry('150x150')
+               win.title("Updated Paramters")
+               Label(win, text="Paramters Updated",font =("Calibri",15),fg="green").grid(row=15,column=5)
+               
 app = App()
 app.mainloop()
