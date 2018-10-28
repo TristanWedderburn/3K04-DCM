@@ -87,11 +87,22 @@ class PageOne(Frame):#login page
                                 print("Logged in")
                                 return self.next_page(PageThree)
                         else:
-                                print("Incorrect password")
-                                return False
+                                print("Incorrect password")				
+                                noLogin = Tk()
+                                noLogin.geometry('300x300')
+                                noLogin.title("Wrong User/Pass")
+                                Label(noLogin, text="Wrong User/Pass",font =("Calibri",15),fg="red").grid(row=15,column=5)
+
                 else:
-                        print("User does not exist")
-                        return False
+
+                        
+                        print("Incorrect password")				
+                        noLogin = Tk()
+                        noLogin.geometry('300x300')
+                        noLogin.title("No User")
+                        Label(noLogin, text="No Such User, Please Register",font =("Calibri",15),fg="red").grid(row=15,column=5)
+			   
+                        
                         
 class PageTwo(Frame):#register
 
@@ -128,7 +139,11 @@ class PageTwo(Frame):#register
                         
                                 
                 if (Num_Users == 10):
-                        Label(self,text = "Maximum Userlimit Reached", fg = "red").pack()
+                        
+                        noRegister = Tk()
+                        noRegister.geometry('300x300')
+                        noRegister.title("Max Limit Reached")
+                        Label(noRegister, text="Max Limit Reached",font =("Calibri",15),fg="red").grid(row=15,column=5)
                         return
                 else:
                         file = open("user_info.txt","a")
