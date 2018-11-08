@@ -1,4 +1,15 @@
 Lebron James
 Kendrick Lamar
+<<<<<<< HEAD
 hello world
 Bronny Jr
+=======
+Bronny Jr
+Stinky Freud
+Bruh Bruh
+a a
+b d
+8 8
+WeirdTest !@$@$K@K@L$L
+3K04 Test
+>>>>>>> d48f93e5d97cef53410a006f54f299a6dd21ef9a
