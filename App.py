@@ -1,7 +1,6 @@
 from Tkinter import *
 
 class App(Tk):
-
 	def __init__(self, *args, **kwargs):
 		Tk.__init__(self, *args, **kwargs)
 
@@ -19,7 +18,7 @@ class App(Tk):
 			frame.grid(row=0, column=0, sticky="nsew")
 
 		self.show_frame(StartPage)
-        
+
 	def show_frame(self, context):
 		frame = self.frames[context]
 		frame.tkraise()
