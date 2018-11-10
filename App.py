@@ -1,4 +1,4 @@
-from Tkinter import *
+from tkinter import *
 
 class App(Tk):
 	def __init__(self, *args, **kwargs):
@@ -168,9 +168,14 @@ class PageThree(Frame):#postLoginScreen
 
                Label(self, text=" ").grid(row=0, column=0)
                Label(self, text="Parameters",font=("Calibri",15)).grid(row=0, column=0,pady=20)
-               Label(self, text="p_pacingState").grid(row=1, column=0)
-               Entry(self,textvariable = p_pacingState).grid(row=1, column=1)
-               Label(self, text="p_pacingMode").grid(row=2, column=0)
+               Label(self, text="p_pacingMode").grid(row=1, column=0)
+               optionList=["VOO","AOO","VVI","AAI"]
+               self.dropVar=StringVar()
+               self.dropVar.set("VOO") #default choice
+               self.dropMenu = OptionMenu(self,self.dropVar,*optionList)
+               self.dropMenu.grid(column=1,row=1)
+               #Entry(self,textvariable = p_pacingState).grid(row=1, column=1)
+               Label(self, text="p_pacingState").grid(row=2, column=0)
                Entry(self,textvariable = p_pacingMode).grid(row=2, column=1)
                Label(self, text="p_hysteresis").grid(row=3, column=0)
                Entry(self,textvariable = p_hysteresis).grid(row=3, column=1)
@@ -185,7 +190,7 @@ class PageThree(Frame):#postLoginScreen
                Label(self, text="p_vVRP").grid(row=8, column=0)
                Entry(self,textvariable = p_vVRP).grid(row=8, column=1)
 
-               Button(self, text="Update Parameters", command= lambda: self.updateParameters(p_pacingState.get(), p_pacingMode.get(),p_hysteresis.get(),p_hysteresisInterval.get(),p_lowrateInterval.get(),p_vPaceAmp.get(),p_vPaceWidth.get(),p_vVRP.get())).grid(row=9,column=1)
+               Button(self, text="Update Parameters", command= lambda: self.updateParameters(p_pacingMode.get(), p_pacingState.get(),p_hysteresis.get(),p_hysteresisInterval.get(),p_lowrateInterval.get(),p_vPaceAmp.get(),p_vPaceWidth.get(),p_vVRP.get())).grid(row=9,column=1)
                
                if checkComm(self) == True:
                        Label(self,text = "Device is IS communicating with the DCM").grid(row=10, column=0,pady=20)
@@ -194,11 +199,11 @@ class PageThree(Frame):#postLoginScreen
                        Label(self,text = "Device is NOT communicating with the DCM").grid(row=11, column=0,pady=20)
                        Label(self,text ="o",fg = "red").grid(row=11, column=1,pady=20)
 
-       def updateParameters(self, p_pacingState, p_pacingMod,p_hysteresis,p_hysteresisInterval,p_lowrateInterval,p_vPaceAmp,p_vPaceWidth,p_vVRP):
+       def updateParameters(self, p_pacingState, p_pacingMode,p_hysteresis,p_hysteresisInterval,p_lowrateInterval,p_vPaceAmp,p_vPaceWidth,p_vVRP):
 
                file = open("paramters_info.txt","w")
-               file.writelines(["p_pacingState"+" "+p_pacingState+'\n',
-                                "p_pacingMod"+" "+p_pacingMod+'\n'
+               file.writelines(["p_pacingMode"+" "+p_pacingMode+'\n',
+                                "p_pacingState"+" "+p_pacingState+'\n'
                                 "p_hysteresis"+" "+p_hysteresis+'\n'
                                 "p_hysteresisInterval"+" "+p_hysteresisInterval+'\n'
                                 "p_lowrateInterval"+" "+p_lowrateInterval+'\n'
