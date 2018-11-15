@@ -93,16 +93,16 @@ class PageOne(Frame):#login page
 
 class User():
         def __init__(self,name,password,parameters=[]):
-                self.name=''
-                self.password =''
-                self.parameters = []
+                self.name=name
+                self.password =password
+                self.parameters = parameters
 
         def getName(self):
                 print(self.name)
                 return self.name
 
         def getPassword(self):
-                
+
                 return self.password
         
         def getParameters(self):
