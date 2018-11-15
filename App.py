@@ -81,7 +81,7 @@ class PageOne(Frame):#login page
 
         def Login_User(self,usernameInput,passwordInput):
                 if usernameInput in userPassRef:
-                        if userPassRef[usernameInput] == passwordInput:
+                        if userPassRef[usernameInput].getPassword == passwordInput:
                                 print("Logged in")
                                 return self.next_page(PageThree)
                         else:
@@ -232,7 +232,8 @@ class PageThree(Frame):#postLoginScreen
                        Label(self,text ="o",fg = "red").grid(row=11, column=1,pady=20)
 
 def updateParameters(self, p_pacingState, p_pacingMode,p_hysteresis,p_hysteresisInterval,p_lowrateInterval,p_vPaceAmp,p_vPaceWidth,p_vVRP):
-
+        #dictionary for the mode for index of each mode based on the string
+        #each value separated by commas
                file = open("paramters_info.txt","w")
                file.writelines(["p_pacingMode"+" "+p_pacingMode+'\n',
                                 "p_pacingState"+" "+p_pacingState+'\n'
