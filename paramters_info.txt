@@ -1,8 +1,8 @@
-p_pacingState acb
-p_pacingMod 2
-p_hysteresis 3
-p_hysteresisInterval 4
-p_lowrateInterval 5
-p_vPaceAmp 6
-p_vPaceWidth 7
-p_vVRP 8
+p_pacingMode 
+p_pacingState 20
+p_hysteresis 
+p_hysteresisInterval 
+p_lowrateInterval 
+p_vPaceAmp 
+p_vPaceWidth 
+p_vVRP 
