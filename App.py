@@ -133,7 +133,7 @@ class PageTwo(Frame):#register
                 else:
                         if(username_info.isalpha() and password_info.isalpha()):
                                 #check if that user is already in the database
-                                if(userPassRef[username]==password):
+                                if(username in userPassRef and userPassRef[username]==password):
                                         #throw error message for invalid credentials
                                         tkMessageBox.showwarning("Error","Invalid Credentials.")
                                 else:
