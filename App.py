@@ -1,4 +1,5 @@
 from Tkinter import *
+import tkMessageBox
 
 class App(Tk):
 	def __init__(self, *args, **kwargs):
@@ -42,9 +43,10 @@ class PageOne(Frame):#login page
         def __init__(self, parent, controller):
                 self.controller = controller
                 Frame.__init__(self, parent)
-
                 usernameInput = StringVar()
                 passwordInput = StringVar()
+                global userPassRef
+                userPassRef = self.getRef()
                 Label(self, text=" ").pack()
                 Label(self, text=" ").pack()
                 Label(self, text="Please Enter Login Details").pack()
@@ -63,16 +65,14 @@ class PageOne(Frame):#login page
                                 # return controller.show_frame(PostLoginScreen)
                 returnToMain.pack()
                 LoginCurrentUser.pack()
-                # user = usernameInput
-                  
-        # def getuser(self):
-        #         return user
+                
         def next_page(self,next):
                         self.controller.show_frame(next)
 
         def getRef(self):
-                userPassRef={}
                 f = open("user_info.txt","r")
+                global userPassRef
+                userPassRef = {}
                 for line in f.readlines():
                         loginInfo = line.split(" ")
                         userPassRef[loginInfo[0]] = loginInfo[1].strip("\n")
@@ -80,37 +80,28 @@ class PageOne(Frame):#login page
                 return userPassRef
 
         def Login_User(self,usernameInput,passwordInput):
-                userPassRef = self.getRef()
                 if usernameInput in userPassRef:
                         if userPassRef[usernameInput] == passwordInput:
                                 print("Logged in")
                                 return self.next_page(PageThree)
                         else:
                                 print("Incorrect password")				
-                                noLogin = Tk()
-                                noLogin.geometry('300x300')
-                                noLogin.title("Wrong User/Pass")
-                                Label(noLogin, text="Wrong User/Pass",font =("Calibri",15),fg="red").grid(row=15,column=5)
-
+                                tkMessageBox.showwarning("Error","Invalid Credentials.")
                 else:
-
-                        
                         print("Incorrect password")				
-                        noLogin = Tk()
-                        noLogin.geometry('300x300')
-                        noLogin.title("No User")
-                        Label(noLogin, text="No Such User, Please Register",font =("Calibri",15),fg="red").grid(row=15,column=5)
-			   
-                        
-                        
+                        tkMessageBox.showwarning("Error","Invalid Credentials.")
+			             
 class PageTwo(Frame):#register
 
         def __init__(self, parent, controller):
                 Frame.__init__(self, parent)
+
+                self.controller = controller
+
                 Label(self,text=" ").pack()
                 username =StringVar()
                 password = StringVar()
-                Label(self, text="Please Enter Registeration Details Below").pack()
+                Label(self, text="Please Enter Registeration Details Below.\nUsername and Password must only contain characters from A-Z.").pack()
                 Label(self,text=" ").pack()
                 Label(self, text="Username *").pack()
                 username_Entry = Entry(self,textvariable = username)
@@ -128,7 +119,7 @@ class PageTwo(Frame):#register
 
                        
         def Register_User(self,username,password):
-                
+                global userPassRef
                 username_info = username
                 password_info = password
                 # insert details into a textfile to store
@@ -136,20 +127,36 @@ class PageTwo(Frame):#register
                 with open("user_info.txt") as f:
                         Num_Users = (len(f.readlines()))
                         
-                                
                 if (Num_Users == 10):
-                        
-                        noRegister = Tk()
-                        noRegister.geometry('300x300')
-                        noRegister.title("Max Limit Reached")
-                        Label(noRegister, text="Max Limit Reached",font =("Calibri",15),fg="red").grid(row=15,column=5)
+                        tkMessageBox.showwarning("Error","Max User Limit Reached")
                         return
                 else:
-                        file = open("user_info.txt","a")
-                        file.write(username_info +" "+password_info+"\n")
-                        file.close()
-                        Label(self,text = "Registration Successful", fg = "green").pack()
+                        if(username_info.isalpha() and password_info.isalpha()):
+                                #check if that user is already in the database
+                                if(userPassRef[username]==password):
+                                        #throw error message for invalid credentials
+                                        tkMessageBox.showwarning("Error","Invalid Credentials.")
+                                else:
+                                        file = open("user_info.txt","a")
+                                        file.write(username_info +" "+password_info+"\n")
+                                        file.close()
+                                        userPassRef[username]=password
+                                        self.controller.show_frame(PageOne)
+                                        return
+                                
+                                # Label(self,text = "Success", fg = "green").pack()
+                        else:
+                                tkMessageBox.showwarning("Error","Invalid Credentials.")
+                                return
 
+        # def checkDb(self, username, password):
+        #         check = username+' '+password
+        #         with open("user_info.txt", "r") as file:
+        #                 for line in file:
+        #                         if line == check:
+        #                                 return True
+        #         return False    
+                        
 class PageThree(Frame):#postLoginScreen
        def __init__(self, parent, controller):
                Frame.__init__(self, parent)

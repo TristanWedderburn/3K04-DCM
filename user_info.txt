@@ -4,7 +4,3 @@ hello world
 Bronny Jr
 a a
 b Bronny
-c c
-d d
-e e
-r r
