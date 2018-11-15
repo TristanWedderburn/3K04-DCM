@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 from Tkinter import *
 import tkMessageBox
-=======
-from tkinter import *
->>>>>>> 5f00c691d056ccbeebd7dedf68a9062565c5bb08
 
 class App(Tk):
 	def __init__(self, *args, **kwargs):
@@ -135,7 +131,7 @@ class PageTwo(Frame):#register
                         tkMessageBox.showwarning("Error","Max User Limit Reached")
                         return
                 else:
-                        if(username_info.isalpha() and password_info.isalpha()):
+                        if(self.validReg(username, password)):
                                 #check if that user is already in the database
                                 if(username in userPassRef and userPassRef[username]==password):
                                         #throw error message for invalid credentials
@@ -153,13 +149,18 @@ class PageTwo(Frame):#register
                                 tkMessageBox.showwarning("Error","Invalid Credentials.")
                                 return
 
-        # def checkDb(self, username, password):
-        #         check = username+' '+password
-        #         with open("user_info.txt", "r") as file:
-        #                 for line in file:
-        #                         if line == check:
-        #                                 return True
-        #         return False    
+        def validReg(self, username, password):
+                for char in xusername:
+                        if not char.isdigit() and not char.isalpha():
+                               tkMessageBox.showwarning("Error","Invalid Credentials.")
+                               return False
+
+                for char in password:
+                        if not char.isdigit() and not char.isalpha():
+                               tkMessageBox.showwarning("Error","Invalid Credentials.")
+                               return False
+        return True
+
                         
 class PageThree(Frame):#postLoginScreen
        def __init__(self, parent, controller):
