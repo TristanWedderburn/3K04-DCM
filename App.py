@@ -90,7 +90,24 @@ class PageOne(Frame):#login page
                 else:
                         print("Incorrect password")				
                         tkMessageBox.showwarning("Error","Invalid Credentials.")
-			             
+
+class User():
+        def __init__(self,name,password,parameters=[]):
+                self.name=''
+                self.password =''
+                self.parameters = []
+
+        def getName(self):
+                print(self.name)
+                return self.name
+
+        def getPassword(self):
+                
+                return self.password
+        
+        def getParameters(self):
+                return self.parameters
+
 class PageTwo(Frame):#register
 
         def __init__(self, parent, controller):
@@ -138,9 +155,11 @@ class PageTwo(Frame):#register
                                         tkMessageBox.showwarning("Error","Invalid Credentials.")
                                 else:
                                         file = open("user_info.txt","a")
+                                         #fix the writing to the file
                                         file.write(username_info +" "+password_info+"\n")
                                         file.close()
-                                        userPassRef[username]=password
+                                        userPassRef[username]= User(username,password)
+                                        print(userPassRef[username].getName())
                                         self.controller.show_frame(PageOne)
                                         return
                                 
@@ -161,6 +180,7 @@ class PageTwo(Frame):#register
                                return False
                 return True
 
+        #dictionary for each user with first index as password
                         
 class PageThree(Frame):#postLoginScreen
        def __init__(self, parent, controller):
@@ -211,7 +231,7 @@ class PageThree(Frame):#postLoginScreen
                        Label(self,text = "Device is NOT communicating with the DCM").grid(row=11, column=0,pady=20)
                        Label(self,text ="o",fg = "red").grid(row=11, column=1,pady=20)
 
-       def updateParameters(self, p_pacingState, p_pacingMode,p_hysteresis,p_hysteresisInterval,p_lowrateInterval,p_vPaceAmp,p_vPaceWidth,p_vVRP):
+def updateParameters(self, p_pacingState, p_pacingMode,p_hysteresis,p_hysteresisInterval,p_lowrateInterval,p_vPaceAmp,p_vPaceWidth,p_vVRP):
 
                file = open("paramters_info.txt","w")
                file.writelines(["p_pacingMode"+" "+p_pacingMode+'\n',
