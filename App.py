@@ -75,25 +75,32 @@ class PageOne(Frame):#login page
                 userPassRef = {}
                 if(not (os.stat("user_info.txt").st_size == 0)):
                         print("not empty")
-                        # f = open("user_info.txt","r")
+                        f = open("user_info.txt","r")
         
-                        # for line in f.readlines():
-                                # loginInfo = line.split(" ")
-                                # userPassRef[loginInfo[0]] = loginInfo[1].strip("\n")
-                        # f.close()
+                        for line in f.readlines():
+                                loginInfo = line.split(" ")
+                                username = loginInfo[0]
+                                password = loginInfo[1].strip("\n")
+                                
+                                userPassRef[username] =User(username, password)
+                        f.close()
                 return userPassRef        
                 
 
         def Login_User(self,usernameInput,passwordInput):
                 if usernameInput in userPassRef:
-                        if userPassRef[usernameInput].getPassword == passwordInput:
+                        print("keys")
+                        print(userPassRef.keys())
+                        print("password")
+                        print(userPassRef[usernameInput].getPassword())
+                        if userPassRef[usernameInput].getPassword() == passwordInput:
                                 print("Logged in")
                                 return self.next_page(PageThree)
                         else:
-                                print("Incorrect password")				
+                                print("Incorrect password2")				
                                 tkMessageBox.showwarning("Error","Invalid Credentials.")
                 else:
-                        print("Incorrect password")				
+                        print("Incorrect password1")				
                         tkMessageBox.showwarning("Error","Invalid Credentials.")
 
 class User():
