@@ -1,5 +1,6 @@
 from Tkinter import *
 import tkMessageBox
+import os
 
 class App(Tk):
 	def __init__(self, *args, **kwargs):
@@ -70,14 +71,18 @@ class PageOne(Frame):#login page
                         self.controller.show_frame(next)
 
         def getRef(self):
-                f = open("user_info.txt","r")
                 global userPassRef
                 userPassRef = {}
-                for line in f.readlines():
-                        loginInfo = line.split(" ")
-                        userPassRef[loginInfo[0]] = loginInfo[1].strip("\n")
-                f.close()
-                return userPassRef
+                if(not (os.stat("user_info.txt").st_size == 0)):
+                        print("not empty")
+                        # f = open("user_info.txt","r")
+        
+                        # for line in f.readlines():
+                                # loginInfo = line.split(" ")
+                                # userPassRef[loginInfo[0]] = loginInfo[1].strip("\n")
+                        # f.close()
+                return userPassRef        
+                
 
         def Login_User(self,usernameInput,passwordInput):
                 if usernameInput in userPassRef:
