@@ -150,7 +150,7 @@ class PageTwo(Frame):#register
                                 return
 
         def validReg(self, username, password):
-                for char in xusername:
+                for char in username:
                         if not char.isdigit() and not char.isalpha():
                                tkMessageBox.showwarning("Error","Invalid Credentials.")
                                return False
@@ -159,7 +159,7 @@ class PageTwo(Frame):#register
                         if not char.isdigit() and not char.isalpha():
                                tkMessageBox.showwarning("Error","Invalid Credentials.")
                                return False
-        return True
+                return True
 
                         
 class PageThree(Frame):#postLoginScreen
