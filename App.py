@@ -46,8 +46,39 @@ class PageOne(Frame):#login page
                 Frame.__init__(self, parent)
                 usernameInput = StringVar()
                 passwordInput = StringVar()
-                global userPassRef
-                userPassRef = self.getRef()
+                global userDatabase = self.getRef()
+                
+                #all of the pssible parameters
+                global parameters=['Lower Rate Limit','Upper Rate Limit','Maximum Sensor Rate','Fixed AV Delay',
+                 'Dynamic AV Delay','Sensed AV Delay Offset','Atrial Amplitude','Ventricular Amplitude','Atrial Pulse Width','Ventricular Pusle Width',
+                 'Atrial Sensitivity','Ventricular Sensitivity','VRP','ARP','PVARP','PVARP Extension','Hysteresis','Rate Smoothing','ATR Duration'
+                 ,'ATR Fallback Mode','ATR Fallback Time','Activity Threshold','Reaction Time','Response Factor','Recovery Time']
+
+                # string or array for data structure?
+
+                #all of the possible mode codes
+                #each mode is represented as an index in the parameters array
+                global AAT=[1,1,0,0,0,0,1,0,1,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0]
+                global VVT=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                #to finish the rest of the codes
+                global AOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                global AAI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                global VOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                global VVI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                global VDD=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                global DOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                global DDI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                global DDD=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                global AOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                global AAIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                global VOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                global VVIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                global VDDR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                global DOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                global DDIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                global DDDR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+
                 Label(self, text=" ").pack()
                 Label(self, text=" ").pack()
                 Label(self, text="Please Enter Login Details").pack()
@@ -60,40 +91,39 @@ class PageOne(Frame):#login page
                 Entry(self,textvariable = passwordInput,show ="*").pack()
                 Label(self, text=" ").pack()
                 Label(self, text=" ").pack()
-                returnToMain = Button(self, text="Main Menu", command=lambda:controller.show_frame(StartPage))
-                Label(self, text=" ").pack()
-                LoginCurrentUser = Button(self, text="Log In", command=lambda:self.Login_User(usernameInput.get(),passwordInput.get()))
-                                # return controller.show_frame(PostLoginScreen)
-                returnToMain.pack()
-                LoginCurrentUser.pack()
-                
+                Button(self, text="Log In", command=lambda:self.Login_User(usernameInput.get(),passwordInput.get())).pack()
+                Button(self, text="Main Menu", command=lambda:controller.show_frame(StartPage)).pack()
+
         def next_page(self,next):
                         self.controller.show_frame(next)
 
         def getRef(self):
-                global userPassRef
-                userPassRef = {}
-                if(not (os.stat("user_info.txt").st_size == 0)):
-                        print("not empty")
+                global userDatabase
+                userDatabase = {}#if no users, return empty database
+                if(not (os.stat("user_info.txt").st_size == 0)):#not empty
                         f = open("user_info.txt","r")
-        
+
                         for line in f.readlines():
                                 loginInfo = line.split(" ")
                                 username = loginInfo[0]
                                 password = loginInfo[1].strip("\n")
                                 
-                                userPassRef[username] =User(username, password)
-                        f.close()
-                return userPassRef        
-                
+                                self temp_parameters =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                                if(len(loginInfo)>2)):
+                                        for i in range(2,len(loginInfo)-1):#initialize any parameters stored for the user
+                                                paramters[i-3]=loginInfo[i]
 
+                                userDatabase[username] =User(username, password, temp_parameters)
+                        f.close()
+                return userDatabase        
+                
         def Login_User(self,usernameInput,passwordInput):
-                if usernameInput in userPassRef:
+                if usernameInput in userDatabase:
                         print("keys")
-                        print(userPassRef.keys())
+                        print(userDatabase.keys())
                         print("password")
-                        print(userPassRef[usernameInput].getPassword())
-                        if userPassRef[usernameInput].getPassword() == passwordInput:
+                        print(userDatabase[usernameInput].getPassword())
+                        if userDatabase[usernameInput].getPassword() == passwordInput:
                                 print("Logged in")
                                 return self.next_page(PageThree)
                         else:
@@ -104,33 +134,30 @@ class PageOne(Frame):#login page
                         tkMessageBox.showwarning("Error","Invalid Credentials.")
 
 class User():
-        def __init__(self,name,password,parameters=[]):
-                self.name=name
-                self.password =password
-                self.parameters = parameters
+        def __init__(self,name,password, parameters=[]):
+                self.name = name
+                self.password = password
+                self.parameters = parameters#each index stores the parameters of the modes as a string?
 
         def getName(self):
-                print(self.name)
                 return self.name
 
         def getPassword(self):
-
                 return self.password
         
         def getParameters(self):
-                return self.parameters
+                return self.parameters#returns object
 
 class PageTwo(Frame):#register
-
         def __init__(self, parent, controller):
                 Frame.__init__(self, parent)
 
                 self.controller = controller
-
+ 
                 Label(self,text=" ").pack()
                 username =StringVar()
                 password = StringVar()
-                Label(self, text="Please Enter Registeration Details Below.\nUsername and Password must only contain characters from A-Z.").pack()
+                Label(self, text="Please Enter Registration Details Below.\nUsername and Password must only contain characters from A-Z.").pack()
                 Label(self,text=" ").pack()
                 Label(self, text="Username *").pack()
                 username_Entry = Entry(self,textvariable = username)
@@ -146,33 +173,32 @@ class PageTwo(Frame):#register
                 createNewUser = Button(self, text="Register Account", command= lambda: self.Register_User(username.get(),password.get()))
                 createNewUser.pack()
 
-                       
         def Register_User(self,username,password):
-                global userPassRef
-                username_info = username
-                password_info = password
+                global userDatabase
+                Login_User = username
+                Login_Password = password
                 # insert details into a textfile to store
                             
                 with open("user_info.txt") as f:
-                        Num_Users = (len(f.readlines()))
+                        NumberofUsers = (len(f.readlines()))
                         
-                if (Num_Users == 10):
+                if (NumberofUser == 10):
                         tkMessageBox.showwarning("Error","Max User Limit Reached")
                         return
                 else:
                         if(self.validReg(username, password)):
                                 #check if that user is already in the database
-                                if(username in userPassRef and userPassRef[username]==password):
+                                if(username in userDatabase and userDatabase[username].getPassword()==password):
                                         #throw error message for invalid credentials
-                                        tkMessageBox.showwarning("Error","Invalid Credentials.")
+                                        tkMessageBox.showwarning("Error","User with that username already in database.")
                                 else:
                                         file = open("user_info.txt","a")
                                          #fix the writing to the file
-                                        file.write(username_info +" "+password_info+"\n")
+                                         #function to turn all of the parameters indices to string then write to file
+                                        file.write(Login_User +" "+Login_Password+"\n")#add current user to the database file on next line
                                         file.close()
-                                        userPassRef[username]= User(username,password)
-                                        print(userPassRef[username].getName())
-                                        self.controller.show_frame(PageOne)
+                                        userDatabase[username]= User(username,password)#create add user to the dictionary instance to reference for login
+                                        self.controller.show_frame(PageOne)#return to login page after registration
                                         return
                                 
                                 # Label(self,text = "Success", fg = "green").pack()
@@ -180,7 +206,7 @@ class PageTwo(Frame):#register
                                 tkMessageBox.showwarning("Error","Invalid Credentials.")
                                 return
 
-        def validReg(self, username, password):
+        def validReg(self, username, password):#check if the entered username and password fit the registration requirements for allowed characters
                 for char in username:
                         if not char.isdigit() and not char.isalpha():
                                tkMessageBox.showwarning("Error","Invalid Credentials.")
@@ -190,22 +216,29 @@ class PageTwo(Frame):#register
                         if not char.isdigit() and not char.isalpha():
                                tkMessageBox.showwarning("Error","Invalid Credentials.")
                                return False
-                return True
+                return True#if successful, returns valid
 
         #dictionary for each user with first index as password
                         
-class PageThree(Frame):#postLoginScreen
-       def __init__(self, parent, controller):
-               Frame.__init__(self, parent)
 
-               p_pacingState =StringVar()
-               p_pacingMode = StringVar()
-               p_hysteresis = StringVar()
-               p_hysteresisInterval = StringVar()
-               p_lowrateInterval =StringVar()
-               p_vPaceAmp = StringVar()
-               p_vPaceWidth = StringVar()
-               p_vVRP = StringVar()
+
+#needs work for back end to add to userDatabase dictionary                        
+class PageThree(Frame):#postLoginScreen
+        def __init__(self, parent, controller):
+               Frame.__init__(self, parent)
+               self.controller = controller
+               #before we add the value to the string, we have to validate it based on if statements?
+               #then add them all to a final string to update the parameter
+               global dropVar
+               dropVar =StringVar()
+               p_pacingState =StringVar()#permanent
+               p_pacingMode = StringVar()#selected mode
+               p_hysteresis = StringVar()#true or false
+               p_hysteresisInterval = StringVar()#between 200 and 500
+               p_lowrateInterval =StringVar()#between 343 and 200
+               p_vPaceAmp = StringVar()#between 500 and 7000
+               p_vPaceWidth = StringVar()#between 0.1 and 1.9
+               p_vVRP = StringVar()#between 150-500
 
                def checkComm(self):
                        return False
@@ -213,14 +246,15 @@ class PageThree(Frame):#postLoginScreen
                Label(self, text=" ").grid(row=0, column=0)
                Label(self, text="Parameters",font=("Calibri",15)).grid(row=0, column=0,pady=20)
                Label(self, text="p_pacingMode").grid(row=1, column=0)
-               optionList=["VOO","AOO","VVI","AAI"]
-               self.dropVar=StringVar()
-               self.dropVar.set("VOO") #default choice
-               self.dropMenu = OptionMenu(self,self.dropVar,*optionList)
-               self.dropMenu.grid(column=1,row=1)
-               #Entry(self,textvariable = p_pacingState).grid(row=1, column=1)
+               Label(self, text="PERMANENT").grid(row=1, column=1)
+               
                Label(self, text="p_pacingState").grid(row=2, column=0)
-               Entry(self,textvariable = p_pacingMode).grid(row=2, column=1)
+               #VOO = index 0, AOO = index 1 VVI = index 2, AII = index 3 in parameters array in user dictionary
+               dropVar.set('VOO') #default choice
+               dropVar.trace('r', self.changeMode)
+        #        self.changeMode(self.dropVar.get())
+               OptionMenu(self,dropVar,'VOO','AOO','VVI','AAI').grid(column=1,row=2)
+
                Label(self, text="p_hysteresis").grid(row=3, column=0)
                Entry(self,textvariable = p_hysteresis).grid(row=3, column=1)
                Label(self, text="p_hysteresisInterval").grid(row=4, column=0)
@@ -236,16 +270,31 @@ class PageThree(Frame):#postLoginScreen
 
                Button(self, text="Update Parameters", command= lambda: self.updateParameters(p_pacingMode.get(), p_pacingState.get(),p_hysteresis.get(),p_hysteresisInterval.get(),p_lowrateInterval.get(),p_vPaceAmp.get(),p_vPaceWidth.get(),p_vVRP.get())).grid(row=9,column=1)
                
+               
                if checkComm(self) == True:
                        Label(self,text = "Device is IS communicating with the DCM").grid(row=10, column=0,pady=20)
                        Label(self,text ="o",fg = "green").grid(row=10, column=1,pady=20)
                elif checkComm(self) == False:
-                       Label(self,text = "Device is NOT communicating with the DCM").grid(row=11, column=0,pady=20)
-                       Label(self,text ="o",fg = "red").grid(row=11, column=1,pady=20)
+                       Label(self,text = "Device is NOT communicating with the DCM").grid(row=10, column=0,pady=20)
+                       Label(self,text ="o",fg = "red").grid(row=10, column=1,pady=20)
+                
+               Button(self, text="Log Out", command= lambda: self.controller.show_frame(PageOne)).grid(row=13,column=1)
 
-def updateParameters(self, p_pacingState, p_pacingMode,p_hysteresis,p_hysteresisInterval,p_lowrateInterval,p_vPaceAmp,p_vPaceWidth,p_vVRP):
+        def changeMode(*args):
+                mode = dropVar.get()
+                if(mode=='VOO'):#if on the current page
+                       print('no change')
+                else:#changed the mode to a different page
+                        print('changed mode')
+                        # self.controller.show_frame(mode)
+
+#update function so that the update adds to the dictionary then back to the file? or from the file then reinitialized to the dictionary
+def updateParameters(self, state, string):#take string based on all of the values of the parameters
         #dictionary for the mode for index of each mode based on the string
         #each value separated by commas
+               
+               #update userDatabase dictonary first
+               
                file = open("paramters_info.txt","w")
                file.writelines(["p_pacingMode"+" "+p_pacingMode+'\n',
                                 "p_pacingState"+" "+p_pacingState+'\n'
