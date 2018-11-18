@@ -44,12 +44,16 @@ class PageOne(Frame):#login page
         def __init__(self, parent, controller):
                 self.controller = controller
                 Frame.__init__(self, parent)
+                global currentUser
+                currentUser = StringVar()
                 usernameInput = StringVar()
                 passwordInput = StringVar()
-                global userDatabase = self.getRef()
+                global userDatabase
+                userDatabase = self.getRef()
                 
                 #all of the pssible parameters
-                global parameters=['Lower Rate Limit','Upper Rate Limit','Maximum Sensor Rate','Fixed AV Delay',
+                global parameters
+                parameters=['Lower Rate Limit','Upper Rate Limit','Maximum Sensor Rate','Fixed AV Delay',
                  'Dynamic AV Delay','Sensed AV Delay Offset','Atrial Amplitude','Ventricular Amplitude','Atrial Pulse Width','Ventricular Pusle Width',
                  'Atrial Sensitivity','Ventricular Sensitivity','VRP','ARP','PVARP','PVARP Extension','Hysteresis','Rate Smoothing','ATR Duration'
                  ,'ATR Fallback Mode','ATR Fallback Time','Activity Threshold','Reaction Time','Response Factor','Recovery Time']
@@ -58,26 +62,49 @@ class PageOne(Frame):#login page
 
                 #all of the possible mode codes
                 #each mode is represented as an index in the parameters array
-                global AAT=[1,1,0,0,0,0,1,0,1,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0]
-                global VVT=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
 
                 #to finish the rest of the codes
-                global AOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                global AAI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                global VOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                global VVI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                global VDD=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                global DOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                global DDI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                global DDD=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                global AOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                global AAIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                global VOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                global VVIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                global VDDR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                global DOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                global DDIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                global DDDR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global AOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global AAI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global VOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global VVI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global VDD=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DDI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DDD=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global AOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global AAIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global VOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global VVIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global VDDR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DDIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DDDR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                global PacingModesList
+                PacingModesList = {
+                        'AAT':[1,1,0,0,0,0,1,0,1,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0],
+                        'VVT':[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
+
+                #to finish the rest of the codes
+                # global AOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global AAI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                        'VOO':[1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global VVI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global VDD=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DDI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DDD=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global AOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global AAIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global VOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global VVIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global VDDR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DDIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DDDR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                }
 
                 Label(self, text=" ").pack()
                 Label(self, text=" ").pack()
@@ -108,12 +135,12 @@ class PageOne(Frame):#login page
                                 username = loginInfo[0]
                                 password = loginInfo[1].strip("\n")
                                 
-                                self temp_parameters =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-                                if(len(loginInfo)>2)):
+                                self.temp_parameters =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                                if(len(loginInfo)>2):
                                         for i in range(2,len(loginInfo)-1):#initialize any parameters stored for the user
                                                 paramters[i-3]=loginInfo[i]
 
-                                userDatabase[username] =User(username, password, temp_parameters)
+                                userDatabase[username] =User(username, password, self.temp_parameters)
                         f.close()
                 return userDatabase        
                 
@@ -124,7 +151,8 @@ class PageOne(Frame):#login page
                         print("password")
                         print(userDatabase[usernameInput].getPassword())
                         if userDatabase[usernameInput].getPassword() == passwordInput:
-                                print("Logged in")
+                                currentUser = usernameInput
+                                print("Logged in: " +currentUser) 
                                 return self.next_page(PageThree)
                         else:
                                 print("Incorrect password2")				
@@ -231,6 +259,8 @@ class PageThree(Frame):#postLoginScreen
                #then add them all to a final string to update the parameter
                global dropVar
                dropVar =StringVar()
+               global form
+               form=[]
                p_pacingState =StringVar()#permanent
                p_pacingMode = StringVar()#selected mode
                p_hysteresis = StringVar()#true or false
@@ -243,50 +273,56 @@ class PageThree(Frame):#postLoginScreen
                def checkComm(self):
                        return False
 
-               Label(self, text=" ").grid(row=0, column=0)
-               Label(self, text="Parameters",font=("Calibri",15)).grid(row=0, column=0,pady=20)
-               Label(self, text="p_pacingMode").grid(row=1, column=0)
-               Label(self, text="PERMANENT").grid(row=1, column=1)
-               
-               Label(self, text="p_pacingState").grid(row=2, column=0)
-               #VOO = index 0, AOO = index 1 VVI = index 2, AII = index 3 in parameters array in user dictionary
-               dropVar.set('VOO') #default choice
-               dropVar.trace('r', self.changeMode)
-        #        self.changeMode(self.dropVar.get())
-               OptionMenu(self,dropVar,'VOO','AOO','VVI','AAI').grid(column=1,row=2)
-
-               Label(self, text="p_hysteresis").grid(row=3, column=0)
-               Entry(self,textvariable = p_hysteresis).grid(row=3, column=1)
-               Label(self, text="p_hysteresisInterval").grid(row=4, column=0)
-               Entry(self,textvariable = p_hysteresisInterval).grid(row=4, column=1)
-               Label(self, text="p_lowrateInterval").grid(row=5, column=0)
-               Entry(self,textvariable = p_lowrateInterval).grid(row=5, column=1)
-               Label(self, text="p_vPaceAmp").grid(row=6, column=0)
-               Entry(self,textvariable = p_vPaceAmp).grid(row=6, column=1)
-               Label(self, text="p_vPaceWidth").grid(row=7, column=0)
-               Entry(self,textvariable = p_vPaceWidth).grid(row=7, column=1)
-               Label(self, text="p_vVRP").grid(row=8, column=0)
-               Entry(self,textvariable = p_vVRP).grid(row=8, column=1)
-
-               Button(self, text="Update Parameters", command= lambda: self.updateParameters(p_pacingMode.get(), p_pacingState.get(),p_hysteresis.get(),p_hysteresisInterval.get(),p_lowrateInterval.get(),p_vPaceAmp.get(),p_vPaceWidth.get(),p_vVRP.get())).grid(row=9,column=1)
-               
+               Button(self, text="Log Out", command= lambda: self.controller.show_frame(PageOne)).grid(row=0,column=1) 
                
                if checkComm(self) == True:
-                       Label(self,text = "Device is IS communicating with the DCM").grid(row=10, column=0,pady=20)
-                       Label(self,text ="o",fg = "green").grid(row=10, column=1,pady=20)
+                       Label(self,text = "Device is IS communicating with the DCM").grid(row=1, column=0,pady=20)
+                       Label(self,text ="o",fg = "green").grid(row=1, column=1,pady=20)
                elif checkComm(self) == False:
-                       Label(self,text = "Device is NOT communicating with the DCM").grid(row=10, column=0,pady=20)
-                       Label(self,text ="o",fg = "red").grid(row=10, column=1,pady=20)
-                
-               Button(self, text="Log Out", command= lambda: self.controller.show_frame(PageOne)).grid(row=13,column=1)
+                       Label(self,text = "Device is NOT communicating with the DCM").grid(row=1, column=0,pady=20)
+                       Label(self,text ="o",fg = "red").grid(row=1, column=1,pady=20)
 
-        def changeMode(*args):
+               Button(self, text="Update Parameters").grid(row=2,column=1)
+        
+               
+               Label(self, text="Parameters",font=("Calibri",15)).grid(row=3, column=0,pady=20)
+               Label(self, text="p_pacingMode").grid(row=4, column=0)
+               Label(self, text="PERMANENT").grid(row=4, column=1)
+               
+               Label(self, text="p_pacingState").grid(row=5, column=0)
+
+               dropVar.set('VOO') #default choice
+               print('before trace')
+        #        dropVar.trace('w', self.form())
+               OptionMenu(self,dropVar,*PacingModesList.keys(), command=self.form).grid(row=5,column=1)
+        
+        def form(self,*args):
+                #global mode to reference
                 mode = dropVar.get()
-                if(mode=='VOO'):#if on the current page
-                       print('no change')
-                else:#changed the mode to a different page
-                        print('changed mode')
-                        # self.controller.show_frame(mode)
+                print('mode2: '+mode)
+                rowIndex=6
+
+                if(form):
+                        for i in range(len(form)):
+                                form[i].grid_forget()
+
+                counter =0
+                for i in range(len(parameters)):#set new parameters
+                        if(PacingModesList[mode][i]==1):
+                                form.append(Label(self,text=parameters[i]))
+                                form[counter].grid(row=rowIndex,column=0)
+                                counter+=1
+                                print(userDatabase[currentUser].parameters[i])
+                                form.append(Entry(self)
+                                form[counter].grid(row=rowIndex,column=1)
+                                counter+=1
+                                rowIndex+=1
+                # for i in range(rowIndex,len(parameters)):
+                #         Label(self, text='').grid(row=rowIndex,column=0)
+                #         rowIndex+=1
+                                # print(userDatabase)
+                                # Entry(self, textvariable = userDatabase[currentUser].parameters[i]).grid(row=rowIndex,column=1)
+                        
 
 #update function so that the update adds to the dictionary then back to the file? or from the file then reinitialized to the dictionary
 def updateParameters(self, state, string):#take string based on all of the values of the parameters
