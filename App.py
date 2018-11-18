@@ -5,7 +5,6 @@ import os
 class App(Tk):
 	def __init__(self, *args, **kwargs):
 		Tk.__init__(self, *args, **kwargs)
-
 		#Setup Frame
 		container = Frame(self)
 		container.pack(side="top", fill="both", expand=True)
@@ -44,8 +43,6 @@ class PageOne(Frame):#login page
         def __init__(self, parent, controller):
                 self.controller = controller
                 Frame.__init__(self, parent)
-                global currentUser
-                currentUser = StringVar()
                 usernameInput = StringVar()
                 passwordInput = StringVar()
                 global userDatabase
@@ -82,29 +79,6 @@ class PageOne(Frame):#login page
                 # global DDDR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
 
                 global PacingModesList
-                PacingModesList = {
-                        'AAT':[1,1,0,0,0,0,1,0,1,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0],
-                        'VVT':[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
-
-                #to finish the rest of the codes
-                # global AOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                # global AAI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                        'VOO':[1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-                # global VVI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                # global VDD=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                # global DOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                # global DDI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                # global DDD=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                # global AOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                # global AAIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                # global VOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                # global VVIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                # global VDDR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                # global DOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                # global DDIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-                # global DDDR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-                }
 
                 Label(self, text=" ").pack()
                 Label(self, text=" ").pack()
@@ -127,6 +101,30 @@ class PageOne(Frame):#login page
         def getRef(self):
                 global userDatabase
                 userDatabase = {}#if no users, return empty database
+
+                global PacingModesList
+                PacingModesList = {
+                        'AAT':[1,1,0,0,0,0,1,0,1,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0],
+                        'VVT':[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
+                #to finish the rest of the codes
+                # global AOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global AAI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                        'VOO':[1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global VVI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global VDD=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DDI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DDD=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global AOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global AAIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global VOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global VVIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global VDDR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DDIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                # global DDDR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+
                 if(not (os.stat("user_info.txt").st_size == 0)):#not empty
                         f = open("user_info.txt","r")
 
@@ -135,7 +133,11 @@ class PageOne(Frame):#login page
                                 username = loginInfo[0]
                                 password = loginInfo[1].strip("\n")
                                 
-                                self.temp_parameters =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                                self.temp_parameters =[]
+                                for i in range(len(PacingModesList.keys())):
+                                        self.temp_parameters.append(
+                                                ([None]*PacingModesList[PacingModesList.keys()[i]].count(1)))
+
                                 if(len(loginInfo)>2):
                                         for i in range(2,len(loginInfo)-1):#initialize any parameters stored for the user
                                                 paramters[i-3]=loginInfo[i]
@@ -146,23 +148,17 @@ class PageOne(Frame):#login page
                 
         def Login_User(self,usernameInput,passwordInput):
                 if usernameInput in userDatabase:
-                        print("keys")
-                        print(userDatabase.keys())
-                        print("password")
-                        print(userDatabase[usernameInput].getPassword())
                         if userDatabase[usernameInput].getPassword() == passwordInput:
+                                global currentUser
                                 currentUser = usernameInput
-                                print("Logged in: " +currentUser) 
                                 return self.next_page(PageThree)
-                        else:
-                                print("Incorrect password2")				
+                        else:			
                                 tkMessageBox.showwarning("Error","Invalid Credentials.")
-                else:
-                        print("Incorrect password1")				
+                else:				
                         tkMessageBox.showwarning("Error","Invalid Credentials.")
 
 class User():
-        def __init__(self,name,password, parameters=[]):
+        def __init__(self,name,password,parameters):
                 self.name = name
                 self.password = password
                 self.parameters = parameters#each index stores the parameters of the modes as a string?
@@ -282,8 +278,8 @@ class PageThree(Frame):#postLoginScreen
                        Label(self,text = "Device is NOT communicating with the DCM").grid(row=1, column=0,pady=20)
                        Label(self,text ="o",fg = "red").grid(row=1, column=1,pady=20)
 
-               Button(self, text="Update Parameters").grid(row=2,column=1)
-        
+               Button(self, text="Update Parameters", command=self.getParams).grid(row=2,column=1)
+
                
                Label(self, text="Parameters",font=("Calibri",15)).grid(row=3, column=0,pady=20)
                Label(self, text="p_pacingMode").grid(row=4, column=0)
@@ -291,15 +287,20 @@ class PageThree(Frame):#postLoginScreen
                
                Label(self, text="p_pacingState").grid(row=5, column=0)
 
-               dropVar.set('VOO') #default choice
-               print('before trace')
-        #        dropVar.trace('w', self.form())
+               dropVar.set('   ') #default choice
                OptionMenu(self,dropVar,*PacingModesList.keys(), command=self.form).grid(row=5,column=1)
+        
+
+        def getParams(*args):
+                mode = dropVar.get()
+                print('all params')
+                
+                for i in range(len(userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)])):
+                        print(userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)][i].get())
         
         def form(self,*args):
                 #global mode to reference
                 mode = dropVar.get()
-                print('mode2: '+mode)
                 rowIndex=6
 
                 if(form):
@@ -307,25 +308,31 @@ class PageThree(Frame):#postLoginScreen
                                 form[i].grid_forget()
 
                 counter =0
+                #counter to see which value to use
+                #have to sum across the whole parameters
+                maxarrayindex=len(userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)])-1
+                arrayindex=0
                 for i in range(len(parameters)):#set new parameters
+                        if(arrayindex>maxarrayindex):
+                                break
+
                         if(PacingModesList[mode][i]==1):
                                 form.append(Label(self,text=parameters[i]))
                                 form[counter].grid(row=rowIndex,column=0)
                                 counter+=1
-                                print(userDatabase[currentUser].parameters[i])
-                                form.append(Entry(self)
+
+                                form.append(Entry(self,textvariable=userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)][arrayindex]))
                                 form[counter].grid(row=rowIndex,column=1)
+                                # userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)][arrayindex]=StringVar()
+                                #trace on the text variable and update the backend with the results afterwards
+                                # form[counter].trace('w', )
+                                arrayindex+=1
                                 counter+=1
                                 rowIndex+=1
-                # for i in range(rowIndex,len(parameters)):
-                #         Label(self, text='').grid(row=rowIndex,column=0)
-                #         rowIndex+=1
-                                # print(userDatabase)
-                                # Entry(self, textvariable = userDatabase[currentUser].parameters[i]).grid(row=rowIndex,column=1)
-                        
+
 
 #update function so that the update adds to the dictionary then back to the file? or from the file then reinitialized to the dictionary
-def updateParameters(self, state, string):#take string based on all of the values of the parameters
+def updateParameters(self, mode, ):#take string based on all of the values of the parameters
         #dictionary for the mode for index of each mode based on the string
         #each value separated by commas
                
