@@ -244,8 +244,6 @@ class PageTwo(Frame):#register
 
         #dictionary for each user with first index as password
                         
-
-
 #needs work for back end to add to userDatabase dictionary                        
 class PageThree(Frame):#postLoginScreen
         def __init__(self, parent, controller):
@@ -257,14 +255,6 @@ class PageThree(Frame):#postLoginScreen
                dropVar =StringVar()
                global form
                form=[]
-               p_pacingState =StringVar()#permanent
-               p_pacingMode = StringVar()#selected mode
-               p_hysteresis = StringVar()#true or false
-               p_hysteresisInterval = StringVar()#between 200 and 500
-               p_lowrateInterval =StringVar()#between 343 and 200
-               p_vPaceAmp = StringVar()#between 500 and 7000
-               p_vPaceWidth = StringVar()#between 0.1 and 1.9
-               p_vVRP = StringVar()#between 150-500
 
                def checkComm(self):
                        return False
@@ -279,7 +269,6 @@ class PageThree(Frame):#postLoginScreen
                        Label(self,text ="o",fg = "red").grid(row=1, column=1,pady=20)
 
                Button(self, text="Update Parameters", command=self.getParams).grid(row=2,column=1)
-
                
                Label(self, text="Parameters",font=("Calibri",15)).grid(row=2, column=0,pady=20)
                Label(self, text="p_pacingMode").grid(row=3, column=0)
@@ -293,10 +282,14 @@ class PageThree(Frame):#postLoginScreen
 
         def getParams(*args):
                 mode = dropVar.get()
-                print('all params')
-                
-                for i in range(len(userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)])):
-                        print(userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)][i].get())
+                maxarrayindex=len(userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)])-1
+                arrayindex=0
+                for i in range(1,len(form),2):
+                        if(arrayindex>maxarrayindex):
+                                break
+                        userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)][arrayindex]= form[i].get()
+                        print(userDatabase[currentUser].parameters)
+                        arrayindex+=1
         
         def form(self,*args):
                 #global mode to reference
@@ -321,15 +314,14 @@ class PageThree(Frame):#postLoginScreen
                         if(PacingModesList[mode][i]==1):
                                 form.append(Label(self,text=parameters[i]))
                                 form[counter].grid(row=rowIndex,column=0)
+
                                 counter+=1
 
-                                form.append(Entry(self,textvariable=userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)][arrayindex]))
+                                form.append(Entry(self,textvariable=StringVar()))
                                 form[counter].grid(row=rowIndex,column=1)
-                                # userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)][arrayindex]=StringVar()
-                                #trace on the text variable and update the backend with the results afterwards
-                                # form[counter].trace('w', )
-                                arrayindex+=1
+                                
                                 counter+=1
+                                arrayindex+=1
                                 rowIndex+=1
 
 #update function so that the update adds to the dictionary then back to the file? or from the file then reinitialized to the dictionary
