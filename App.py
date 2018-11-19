@@ -281,14 +281,14 @@ class PageThree(Frame):#postLoginScreen
                Button(self, text="Update Parameters", command=self.getParams).grid(row=2,column=1)
 
                
-               Label(self, text="Parameters",font=("Calibri",15)).grid(row=3, column=0,pady=20)
-               Label(self, text="p_pacingMode").grid(row=4, column=0)
-               Label(self, text="PERMANENT").grid(row=4, column=1)
+               Label(self, text="Parameters",font=("Calibri",15)).grid(row=2, column=0,pady=20)
+               Label(self, text="p_pacingMode").grid(row=3, column=0)
+               Label(self, text="PERMANENT").grid(row=3, column=1)
                
-               Label(self, text="p_pacingState").grid(row=5, column=0)
+               Label(self, text="p_pacingState").grid(row=4, column=0)
 
                dropVar.set('   ') #default choice
-               OptionMenu(self,dropVar,*PacingModesList.keys(), command=self.form).grid(row=5,column=1)
+               OptionMenu(self,dropVar,*PacingModesList.keys(), command=self.form).grid(row=4,column=1)
         
 
         def getParams(*args):
@@ -300,12 +300,14 @@ class PageThree(Frame):#postLoginScreen
         
         def form(self,*args):
                 #global mode to reference
+                global form
                 mode = dropVar.get()
-                rowIndex=6
+                rowIndex=5
 
                 if(form):
                         for i in range(len(form)):
-                                form[i].grid_forget()
+                                form[i].grid_remove()
+                        form=[]
 
                 counter =0
                 #counter to see which value to use
@@ -329,7 +331,6 @@ class PageThree(Frame):#postLoginScreen
                                 arrayindex+=1
                                 counter+=1
                                 rowIndex+=1
-
 
 #update function so that the update adds to the dictionary then back to the file? or from the file then reinitialized to the dictionary
 def updateParameters(self, mode, ):#take string based on all of the values of the parameters
