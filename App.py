@@ -224,8 +224,6 @@ class PageTwo(Frame):#register
                                         userDatabase[username]= User(username,password)#create add user to the dictionary instance to reference for login
                                         self.controller.show_frame(PageOne)#return to login page after registration
                                         return
-                                
-                                # Label(self,text = "Success", fg = "green").pack()
                         else:
                                 tkMessageBox.showwarning("Error","Invalid Credentials.")
                                 return
@@ -279,11 +277,14 @@ class PageThree(Frame):#postLoginScreen
                dropVar.set('   ') #default choice
                OptionMenu(self,dropVar,*PacingModesList.keys(), command=self.form).grid(row=4,column=1)
         
-
         def getParams(*args):
                 mode = dropVar.get()
                 maxarrayindex=len(userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)])-1
                 arrayindex=0
+
+                #instead of for loop, we want to read the label, find out which parameter, we're getting the value for, and then verify the value is within the bounds set in the documentation
+                #create helper function to validate based on input label text and the value retrieved
+
                 for i in range(1,len(form),2):
                         if(arrayindex>maxarrayindex):
                                 break
@@ -291,6 +292,10 @@ class PageThree(Frame):#postLoginScreen
                         print(userDatabase[currentUser].parameters)
                         arrayindex+=1
         
+        # def withinBounds(self,parameter,value):
+                
+
+
         def form(self,*args):
                 #global mode to reference
                 global form
@@ -314,7 +319,6 @@ class PageThree(Frame):#postLoginScreen
                         if(PacingModesList[mode][i]==1):
                                 form.append(Label(self,text=parameters[i]))
                                 form[counter].grid(row=rowIndex,column=0)
-
                                 counter+=1
 
                                 form.append(Entry(self,textvariable=StringVar()))
