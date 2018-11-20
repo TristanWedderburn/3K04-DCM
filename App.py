@@ -1,5 +1,5 @@
 from Tkinter import *
-import tkMessageBox
+import tkMessageBox 
 import os
 
 class App(Tk):
@@ -140,7 +140,7 @@ class PageOne(Frame):#login page
 
                                 if(len(loginInfo)>2):
                                         for i in range(2,len(loginInfo)-1):#initialize any parameters stored for the user
-                                                paramters[i-3]=loginInfo[i]
+                                                parameters[i-3]=loginInfo[i]
 
                                 userDatabase[username] =User(username, password, self.temp_parameters)
                         f.close()
@@ -294,8 +294,6 @@ class PageThree(Frame):#postLoginScreen
         
         # def withinBounds(self,parameter,value):
                 
-
-
         def form(self,*args):
                 #global mode to reference
                 global form
@@ -327,6 +325,7 @@ class PageThree(Frame):#postLoginScreen
                                 counter+=1
                                 arrayindex+=1
                                 rowIndex+=1
+                print(form)
 
 #update function so that the update adds to the dictionary then back to the file? or from the file then reinitialized to the dictionary
 def updateParameters(self, mode, ):#take string based on all of the values of the parameters
@@ -351,6 +350,54 @@ def updateParameters(self, mode, ):#take string based on all of the values of th
                win.geometry('150x150')
                win.title("Updated Paramters")
                Label(win, text="Paramters Updated",font =("Calibri",15),fg="green").grid(row=15,column=5)
+
+parameterDictonary = {"Mode":
+
+
+
+        
+}
+
+trueFalseParams = set("") # fill this with the paramaters that are either true or false 
+def validParameter(self,param,value):
+        # takes in a string that represents the paramater we are checking
+        # this function returns true or false depending if the form is valid or not 
+        if param in trueFalseParams: # checks the true false list 
+                if value.lower() != "on" or value.lower() != "off":
+                        return False
+
+        
+        elif (param == "modesomething"):
+
+                # do something 
+        
+        elif (param == "modesomething"):
+
+                # do something 
+
+        elif (param == "modesomething"):
+
+                # do something 
+
+        elif (param == "modesomething"):
+
+                # do something 
+
+
+        elif (param == "modesomething"):
+
+                # do something 
+
+        elif (param == "modesomething"):
+
+                # do something 
+
+        elif (param == "modesomething"):
+
+                # do something   
+
+
+        return True
                
 app = App()
 app.mainloop()
