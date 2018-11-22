@@ -622,7 +622,6 @@ class PageThree(Frame):#postLoginScreen
                         if(PacingModesList[mode][i]==1):
 
                                 form.append(Label(self,text=parameters[i]))
-                                print(parameters[i])
 
                                 form[counter].grid(row=rowIndex,column=0)
 
