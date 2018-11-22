@@ -564,7 +564,7 @@ class PageThree(Frame):#postLoginScreen
 
                         userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)][arrayindex]= form[i].get()
 
-                        print(userDatabase[currentUser].parameters)
+                        #print(userDatabase[currentUser].parameters)
 
                         arrayindex+=1
                         
@@ -667,7 +667,7 @@ class PageThree(Frame):#postLoginScreen
 
 
                 mode = dropVar.get()
-                print(userDatabase[currentUser].outputData)
+                print(userDatabase[currentUser].parameters)
 
                 
 
@@ -680,63 +680,34 @@ class PageThree(Frame):#postLoginScreen
                                 userDatabase[currentUser].outputData= i+","
 
                                 for mode in PacingModesList:#for loop not needed as we only need to transfer information for one mode at a tim
-                                        
-                                        if(mode=='AOO'):
-                                                userDatabase[currentUser].outputData+= mode+","
+
+
+
+
+                                        if(mode=='AAIR'):
+                                                userDatabase[currentUser].outputData+= mode+","       
                                                 counter=0
 
-                                                for k in PacingModesList['AOO']:
+                                                for k in PacingModesList['AAIR']:
 
                                                         if k==1:
-                                                                        
+                                                                
                                                                 userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[0][counter]+","
                                                                 counter+=1
 
                                                         else:
                                                                 userDatabase[currentUser].outputData+= "0,"
-                                                          # write all corresponding parameters to specific mode
-
-
-                                        elif(mode=='AAI'):
-                                                userDatabase[currentUser].outputData+= mode+","       
-                                                counter2=0
-
-                                                for k in PacingModesList['AAI']:
-
-                                                        if k==1:
-
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[1][counter2]+","
-                                                                counter2+=1
-
-                                                        else:
-                                                                userDatabase[currentUser].outputData+= "0,"
-                                                                  
-
-                                        elif(mode=='VOO'):
-                                                userDatabase[currentUser].outputData+= mode+"," 
-                                                counter3=0
-
-                                                for k in PacingModesList['VOO']:
-
-                                                        if k==1:
-
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[2][counter3]+","
-                                                                counter3+=1
-
-                                                        else:
-                                                        
-                                                                userDatabase[currentUser].outputData+= "0,"
-
+                                        
                                         elif(mode=='VVI'):
                                                 userDatabase[currentUser].outputData+= mode+","
-                                                counter4=0
+                                                counter=0
 
                                                 for k in PacingModesList['VVI']:
 
                                                         if k==1:
 
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[3][counter4]+","
-                                                                counter4+=1
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[1][counter]+","
+                                                                counter+=1
 
                                                         else:
                                                         
@@ -744,67 +715,107 @@ class PageThree(Frame):#postLoginScreen
 
                                         elif(mode=='AOOR'):
                                                 userDatabase[currentUser].outputData+= mode+","
-                                                counter5=0
+                                                counter=0
 
                                                 for k in PacingModesList['AOOR']:
 
                                                         if k==1:
                                                                         
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[4][counter5]+","
-                                                                counter5+=1
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[2][counter]+","
+                                                                counter+=1
+
+                                                        else:
+                                                                userDatabase[currentUser].outputData+= "0,"
+                                                          # write all corresponding parameters to specific mode
+                                                print userDatabase[currentUser].parameters         
+
+                                        
+
+                                                                
+                                        
+                                        elif(mode=='AOO'):
+                                                userDatabase[currentUser].outputData+= mode+","
+                                                counter=0
+
+                                                for k in PacingModesList['AOO']:
+
+                                                        if k==1:
+                                                                        
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[3][counter]+","
+                                                                counter+=1
 
                                                         else:
                                                                 userDatabase[currentUser].outputData+= "0,"
                                                           # write all corresponding parameters to specific mode
 
-
-                                        elif(mode=='AAIR'):
-                                                userDatabase[currentUser].outputData+= mode+","       
-                                                counter6=0
-
-                                                for k in PacingModesList['AAIR']:
-
-                                                        if k==1:
-
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[5][counter6]+","
-                                                                counter6+=1
-
-                                                        else:
-                                                                userDatabase[currentUser].outputData+= "0,"
-                                                                  
-
-                                        elif(mode=='VOOR'):
-                                                userDatabase[currentUser].outputData+= mode+"," 
-                                                counter7=0
-
-                                                for k in PacingModesList['VOOR']:
-
-                                                        if k==1:
-
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[6][counter7]+","
-                                                                counter7+=1
-
-                                                        else:
-                                                        
-                                                                userDatabase[currentUser].outputData+= "0,"
-
                                         elif(mode=='VVIR'):
                                                 userDatabase[currentUser].outputData+= mode+","
-                                                counter8=0
+                                                counter=0
 
                                                 for k in PacingModesList['VVIR']:
 
                                                         if k==1:
 
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[7][counter8]+","
-                                                                counter8+=1
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[4][counter]+","
+                                                                counter+=1
 
                                                         else:
                                                         
                                                                 userDatabase[currentUser].outputData+= "0,"
                                         
+                                        elif(mode=='VOO'):
+                                                userDatabase[currentUser].outputData+= mode+"," 
+                                                counter=0
+
+                                                for k in PacingModesList['VOO']:
+
+                                                        if k==1:
+
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[5][counter]+","
+                                                                counter+=1
+
+                                                        else:
                                                         
-                print userDatabase[currentUser].outputData          
+                                                                userDatabase[currentUser].outputData+= "0,"
+
+
+                                        elif(mode=='AAI'):
+                                                userDatabase[currentUser].outputData+= mode+","       
+                                                counter=0
+
+                                                for k in PacingModesList['AAI']:
+
+                                                        if k==1:
+
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[6][counter]+","
+                                                                counter+=1
+
+                                                        else:
+                                                                userDatabase[currentUser].outputData+= "0,"
+                                                                  
+
+                                        
+
+                                        
+                                        elif(mode=='VOOR'):
+                                                userDatabase[currentUser].outputData+= mode+"," 
+                                                counter=0
+
+                                                for k in PacingModesList['VOOR']:
+
+                                                        if k==1:
+
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[7][counter]+","
+                                                                counter+=1
+
+                                                        else:
+                                                        
+                                                                userDatabase[currentUser].outputData+= "0,"
+
+                                        
+                                        
+                                                        
+                #print userDatabase[currentUser].outputData          
                 self.outputToFile()
 
 
