@@ -539,19 +539,17 @@ class PageThree(Frame):  # postLoginScreen
         else:
             ACTIVITY_THRESHOLD = 7
         
-        
         SYNC = 1
         FN_CODE = 1 # WILL CHANGE DEPENDING ON THE MODE, STILL GOTTA FIGURE THIS OUT FOR SUREZIES
         strFormat = "bbbdddddddddddddbbbbb" #SYNC, FN_CODE , PACE_MODE, LOWER_LIMIT, UPPER_LIMIT, MAX_SENS_RATE,A_AMPLITUDE, 
         #V_AMPLITUDE, A_PULSEWIDTH, V_PULSEWIDTH, A_SENSITIVITY, VRP, ARP, PVARP, HYSTERESIS, RATESMOOTTHING,
         #ACTIVITY_TRHESHOLD, REACTION_TIME, RESPONSE_FACTOR,RECOVERY_TIME
 
-        # packed = pack(
-        #     strFormat,
-        #     SYNC,
-        #     FN_CODE,
-        #     MODE,
-        print(
+        packed = pack(
+            strFormat,
+            SYNC,
+            FN_CODE,
+            MODE,
             float(userDatabase[currentUser].parameters[mode][0]),
             float(userDatabase[currentUser].parameters[mode][1]),
             float(userDatabase[currentUser].parameters[mode][2]),
@@ -571,10 +569,9 @@ class PageThree(Frame):  # postLoginScreen
             int(userDatabase[currentUser].parameters[mode][16]),
             int(userDatabase[currentUser].parameters[mode][17])
         )
-        # )
         
         # print(packed)
-        # what we need to put here.
+
         # ser.write(1001)
         # figure out how to recive data
         # ser.close()
