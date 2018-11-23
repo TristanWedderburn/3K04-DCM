@@ -595,11 +595,12 @@ class PageThree(Frame):#postLoginScreen
                                                         if k==1:
 
                                                                 userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[mode][counter]+","
-                                                                counter+=1
+                                                                
 
                                                         else:
                                                         
                                                                 userDatabase[currentUser].outputData+= "0,"
+                                                        counter+=1
 
                                         elif(mode=='AOOR'):
                                                 userDatabase[currentUser].outputData+= mode+","
@@ -610,10 +611,11 @@ class PageThree(Frame):#postLoginScreen
                                                         if k==1:
                                                                         
                                                                 userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[mode][counter]+","
-                                                                counter+=1
+                                                                
 
                                                         else:
                                                                 userDatabase[currentUser].outputData+= "0,"
+                                                        counter+=1
                                                           # write all corresponding parameters to specific mode       
 
                                         elif(mode=='AOO'):
@@ -625,10 +627,11 @@ class PageThree(Frame):#postLoginScreen
                                                         if k==1:
                                                                         
                                                                 userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[mode][counter]+","
-                                                                counter+=1
+                                                                
 
                                                         else:
                                                                 userDatabase[currentUser].outputData+= "0,"
+                                                        counter+=1
                                                           # write all corresponding parameters to specific mode
 
                                         elif(mode=='VVIR'):
@@ -640,11 +643,11 @@ class PageThree(Frame):#postLoginScreen
                                                         if k==1:
 
                                                                 userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[mode][counter]+","
-                                                                counter+=1
 
                                                         else:
                                                         
                                                                 userDatabase[currentUser].outputData+= "0,"
+                                                        counter+=1
                                         
                                         elif(mode=='VOO'):
                                                 userDatabase[currentUser].outputData+= mode+"," 
@@ -656,7 +659,6 @@ class PageThree(Frame):#postLoginScreen
 
                                                                 userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[mode][counter]+","
                                                                 
-
                                                         else:
                                                         
                                                                 userDatabase[currentUser].outputData+= "0,"
@@ -673,10 +675,11 @@ class PageThree(Frame):#postLoginScreen
                                                         if k==1:
 
                                                                 userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[mode][counter]+","
-                                                                counter+=1
+                                                                
 
                                                         else:
                                                                 userDatabase[currentUser].outputData+= "0,"
+                                                        counter+=1
                                                                   
 
                                         
@@ -691,13 +694,13 @@ class PageThree(Frame):#postLoginScreen
                                                         if k==1:
 
                                                                 userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[mode][counter]+","
-                                                                counter+=1
+                                                                
 
                                                         else:
                                                         
                                                                 userDatabase[currentUser].outputData+= "0,"
+                                                        counter+=1
 
-                                                 
                 self.outputToFile()
 
 
