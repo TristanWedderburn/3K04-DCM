@@ -22,11 +22,7 @@ class App(Tk):
 
 		container.grid_columnconfigure(0, weight=1)
 
-                
-
 		self.frames = {}
-
-                
 
 		for F in (StartPage, PageOne, PageTwo, PageThree):
 
@@ -36,19 +32,13 @@ class App(Tk):
 
 			frame.grid(row=0, column=0, sticky="nsew")
 
-
-
 		self.show_frame(StartPage)
-
-
 
 	def show_frame(self, context):
 
 		frame = self.frames[context]
 
 		frame.tkraise()
-
-
 
 class StartPage(Frame):
 
@@ -106,8 +96,6 @@ class PageOne(Frame):#login page
 
                 global PacingModesList
 
-
-
                 Label(self, text=" ").pack()
 
                 Label(self, text=" ").pack()
@@ -148,12 +136,9 @@ class PageOne(Frame):#login page
 
                 global userDatbase
                 userDatabase = {}
+                
                 global outputData
                 outputData = ""
-
-                 #if no users, return empty database
-
-
 
                 global PacingModesList
 
@@ -174,48 +159,44 @@ class PageOne(Frame):#login page
                         'VOOR':[1,1,1,0,1,0,1,0,0,0,0,0,1,1,1,1,1,1],
 
                         'VVIR':[1,1,1,0,1,0,1,0,1,1,0,0,1,1,1,1,1,1]
-
                 }
 
-
+                #initiaize all of the user object using the text file
+                #initialize username and password
 
                 if(not (os.stat("user_info.txt").st_size == 0)):#not empty
 
                         f = open("user_info.txt","r")
 
-
-
                         for line in f.readlines():
 
                                 loginInfo = line.split(" ")
+
+                                print(loginInfo)
 
                                 username = loginInfo[0]
 
                                 password = loginInfo[1].strip("\n")
 
+                                userDatabase[username]=User(username, password)#stores user in userDatabase
                                 
-
-                                self.temp_parameters =[]
-
-                                for i in range(len(PacingModesList.keys())):
-
-                                        self.temp_parameters.append(
-
-                                                (["0"]*PacingModesList[PacingModesList.keys()[i]].count(1)))
-
-
-
-                                if(len(loginInfo)>2):
-
-                                        for i in range(2,len(loginInfo)-1):#initialize any parameters stored for the user
-
-                                                paramters[i-3]=loginInfo[i]
-
-
-
-                                userDatabase[username] =User(username, password, self.temp_parameters,outputData)
-
                         f.close()
+                        
+                        f = open("parameters_info.txt","r")
+
+                        for line in f.readlines():
+                                user = line.split(',')
+                                name=str(user[0])
+                                userDatabase[name].parameters[user[1]] = user[2:20]
+                                userDatabase[name].parameters[user[20]] = user[21:39]
+                                #19 for each one
+                                #name +19 =next one
+                                userDatabase[name].parameters[user[39]] = user[40:58]
+                                userDatabase[name].parameters[user[58]] = user[59:77]
+                                userDatabase[name].parameters[user[77]] = user[78:96]
+                                userDatabase[name].parameters[user[96]] = user[97:115]
+                                userDatabase[name].parameters[user[115]] = user[116:134]
+                                userDatabase[name].parameters[user[134]] = user[135:153]
 
                 return userDatabase        
 
@@ -245,29 +226,23 @@ class PageOne(Frame):#login page
 
 class User():
 
-        def __init__(self,name,password,parameters,ouputData):
+        def __init__(self,name,password,parameters={},ouputData=''):
 
-                self.name = name
+                self.name = name#name string
+                
+                self.password = password#password string
 
-                self.outputData = outputData
-
-                self.password = password
+                self.outputData = outputData#string of output data
 
                 self.parameters = parameters#each index stores the parameters of the modes as a string?
-
-
 
         def getName(self):
 
                 return self.name
 
-
-
         def getPassword(self):
 
                 return self.password
-
-        
 
         def getParameters(self):
 
@@ -388,8 +363,6 @@ class PageTwo(Frame):#register
 
                                 return
 
-
-
         def validReg(self, username, password):#check if the entered username and password fit the registration requirements for allowed characters
 
                 for char in username:
@@ -440,13 +413,9 @@ class PageThree(Frame):#postLoginScreen
 
                form=[]
 
-
-
                def checkComm(self):
 
                        return False
-
-
 
                Button(self, text="Log Out", command= lambda: self.controller.show_frame(PageOne)).grid(row=0,column=1) 
 
@@ -466,7 +435,6 @@ class PageThree(Frame):#postLoginScreen
 
 
                Button(self, text="Update Parameters", command=self.updateParameters).grid(row=2,column=1)
-
 
                Label(self, text="Parameters",font=("Calibri",15)).grid(row=2, column=0,pady=20)
 
@@ -585,7 +553,6 @@ class PageThree(Frame):#postLoginScreen
         def outputToFile(self,*args):
                 File = open("parameters_info.txt","w")
                 for i in userDatabase:
-                        
                         File.write(userDatabase[i].getOutputData()+"\n")
                 File.close()
 
@@ -602,12 +569,15 @@ class PageThree(Frame):#postLoginScreen
                 self.getParams()
 
                 mode = dropVar.get()
+                
+                print('userDb')
+                print(userDatabase)
 
                 for i in userDatabase:
                         if(i==currentUser): # the current user is then appended to
                                 userDatabase[currentUser].outputData= i+","
 
-                                for mode in PacingModesList:#for loop not needed as we only need to transfer information for one mode at a tim
+                                for mode in PacingModesList:#for loop not needed as we only need to transfer information for one mode at a time!!!
 
 
 
