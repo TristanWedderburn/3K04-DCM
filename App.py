@@ -46,6 +46,9 @@ class StartPage(Frame):
 
 		Frame.__init__(self, parent)
 
+                global userDatabase
+                userDatabase = {}
+
 		frame = Frame(width=500, height=250)
 
 		frame.pack()
@@ -83,7 +86,6 @@ class PageOne(Frame):#login page
                 passwordInput = StringVar()
 
                 global userDatabase
-                userDatabase = self.getRef()
 
                 global parameters
 
@@ -124,42 +126,16 @@ class PageOne(Frame):#login page
 
                 Button(self, text="Main Menu", command=lambda:controller.show_frame(StartPage)).pack()
 
-
-
         def next_page(self,next):
 
                         self.controller.show_frame(next)
 
-
-
         def getRef(self):
 
                 global userDatbase
-                userDatabase = {}
                 
                 global outputData
                 outputData = ""
-
-                global PacingModesList
-
-                PacingModesList = {
-
-                        'AOO':[1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0],
-
-                        'AAI':[1,1,0,1,0,1,0,1,0,0,1,1,1,1,0,0,0,0],
-
-                        'VOO':[1,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0],
-
-                        'VVI':[1,1,0,0,1,0,1,0,1,1,0,0,1,1,0,0,0,0],
-
-                        'AOOR':[1,1,1,1,0,1,0,0,0,0,0,0,1,1,1,1,1,1],
-
-                        'AAIR':[1,1,1,1,0,1,0,1,0,0,1,1,1,1,1,1,1,1],
-
-                        'VOOR':[1,1,1,0,1,0,1,0,0,0,0,0,1,1,1,1,1,1],
-
-                        'VVIR':[1,1,1,0,1,0,1,0,1,1,0,0,1,1,1,1,1,1]
-                }
 
                 #initiaize all of the user object using the text file
                 #initialize username and password
@@ -202,6 +178,8 @@ class PageOne(Frame):#login page
 
         def Login_User(self,usernameInput,passwordInput):
 
+                userDatabase = self.getRef()
+
                 if usernameInput in userDatabase:
 
                         if userDatabase[usernameInput].getPassword() == passwordInput:
@@ -230,7 +208,7 @@ class User():
                 
                 self.password = password#password string
 
-                self.outputData = outputData#string of output data
+                # self.outputData = outputData#string of output data
 
                 self.parameters = parameters#each index stores the parameters of the modes as a string?
 
@@ -246,8 +224,8 @@ class User():
 
                 return self.parameters#returns object
         
-        def getOutputData(self):
-                return self.outputData
+        # def getOutputData(self):
+        #         return self.outputData
 
 
 
@@ -257,11 +235,9 @@ class PageTwo(Frame):#register
 
                 Frame.__init__(self, parent)
 
-
+                global userDatabase
 
                 self.controller = controller
-
- 
 
                 Label(self,text=" ").pack()
 
@@ -311,8 +287,6 @@ class PageTwo(Frame):#register
 
                 # insert details into a textfile to store
 
-                            
-
                 with open("user_info.txt") as f:
 
                          NumberofUsers = (len(f.readlines()))
@@ -349,7 +323,7 @@ class PageTwo(Frame):#register
 
                                         file.close()
 
-                                        userDatabase[username]= User(username,password,parameters,outputData)#create add user to the dictionary instance to reference for login
+                                        userDatabase[username]= User(username,password,parameters)#create add user to the dictionary instance to reference for login
 
                                         self.controller.show_frame(PageOne)#return to login page after registration
 
@@ -398,6 +372,27 @@ class PageThree(Frame):#postLoginScreen
                Frame.__init__(self, parent)
 
                self.controller = controller
+
+               global PacingModesList
+               
+               PacingModesList = {
+
+                        'AOO':[1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0],
+
+                        'AAI':[1,1,0,1,0,1,0,1,0,0,1,1,1,1,0,0,0,0],
+
+                        'VOO':[1,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0],
+
+                        'VVI':[1,1,0,0,1,0,1,0,1,1,0,0,1,1,0,0,0,0],
+
+                        'AOOR':[1,1,1,1,0,1,0,0,0,0,0,0,1,1,1,1,1,1],
+
+                        'AAIR':[1,1,1,1,0,1,0,1,0,0,1,1,1,1,1,1,1,1],
+
+                        'VOOR':[1,1,1,0,1,0,1,0,0,0,0,0,1,1,1,1,1,1],
+
+                        'VVIR':[1,1,1,0,1,0,1,0,1,1,0,0,1,1,1,1,1,1]
+                }
 
                #before we add the value to the string, we have to validate it based on if statements?
 
