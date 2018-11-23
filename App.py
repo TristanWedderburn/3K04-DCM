@@ -512,8 +512,6 @@ class PageThree(Frame):#postLoginScreen
 
                         form=[]
 
-
-
                 counter =0
 
                 # maxarrayindex=17
