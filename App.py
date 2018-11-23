@@ -167,8 +167,6 @@ class PageOne(Frame):#login page
                                 name=str(user[0])
                                 userDatabase[name].parameters[user[1]] = user[2:20]
                                 userDatabase[name].parameters[user[20]] = user[21:39]
-                                #19 for each one
-                                #name +19 =next one
                                 userDatabase[name].parameters[user[39]] = user[40:58]
                                 userDatabase[name].parameters[user[58]] = user[59:77]
                                 userDatabase[name].parameters[user[77]] = user[78:96]
@@ -206,7 +204,7 @@ class PageOne(Frame):#login page
 
 class User():
 
-        def __init__(self,name,password,parameters={},outputData=''):
+        def __init__(self,name,password):
 
                 self.name = name#name string
                 
@@ -214,7 +212,17 @@ class User():
 
                 # self.outputData = outputData#string of output data
 
-                self.parameters = parameters#each index stores the parameters of the modes as a string?
+                self.parameters = {}
+                self.parameters['AOO']= ['0']*18
+                self.parameters['AAI']= ['0']*18
+                self.parameters['VOO']= ['0']*18
+                self.parameters['VVI']= ['0']*18
+                self.parameters['AOOR']= ['0']*18
+                self.parameters['AAIR']= ['0']*18
+                self.parameters['VOOR']= ['0']*18
+                self.parameters['VVIR']= ['0']*18
+                
+               #each index stores the parameters of the modes as a string?
 
         def getName(self):
 
@@ -445,8 +453,6 @@ class PageThree(Frame):#postLoginScreen
 
                OptionMenu(self,dropVar,*PacingModesList.keys(), command=self.form).grid(row=4,column=1)
 
-        
-
         def getParams(*args):
 
                 global validParams
@@ -516,7 +522,9 @@ class PageThree(Frame):#postLoginScreen
                 #counter to see which value to use
 
                 #have to sum across the whole parameters
-
+                
+                print(PacingModesList.keys().index(mode))
+                print(userDatabase[currentUser].parameters)
                 maxarrayindex=len(userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)])-1
 
                 arrayindex=0
