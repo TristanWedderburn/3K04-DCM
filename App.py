@@ -450,19 +450,18 @@ class PageThree(Frame):#postLoginScreen
 
                Button(self, text="Log Out", command= lambda: self.controller.show_frame(PageOne)).grid(row=0,column=1) 
 
-               
+        #this section would have to be inside the serial communication loop
+        #        if checkComm(self) == True:
 
-               if checkComm(self) == True:
+        #                Label(self,text = "Device is IS communicating with the DCM").grid(row=1, column=0,pady=20)
 
-                       Label(self,text = "Device is IS communicating with the DCM").grid(row=1, column=0,pady=20)
+        #                Label(self,text ="o",fg = "green").grid(row=1, column=1,pady=20)
 
-                       Label(self,text ="o",fg = "green").grid(row=1, column=1,pady=20)
+        #        elif checkComm(self) == False:
 
-               elif checkComm(self) == False:
+        #                Label(self,text = "Device is NOT communicating with the DCM").grid(row=1, column=0,pady=20)
 
-                       Label(self,text = "Device is NOT communicating with the DCM").grid(row=1, column=0,pady=20)
-
-                       Label(self,text ="o",fg = "red").grid(row=1, column=1,pady=20)
+        #                Label(self,text ="o",fg = "red").grid(row=1, column=1,pady=20)
 
 
 
