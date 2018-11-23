@@ -1,8 +1,0 @@
-p_pacingMode 
-p_pacingState 20
-p_hysteresis 
-p_hysteresisInterval 
-p_lowrateInterval 
-p_vPaceAmp 
-p_vPaceWidth 
-p_vVRP 

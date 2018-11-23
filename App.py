@@ -95,10 +95,6 @@ class PageOne(Frame):#login page
                 global userDatabase
                 userDatabase = self.getRef()
 
-                
-
-                #all of the pssible parameters
-
                 global parameters
 
                 parameters=['Lower Rate Limit','Upper Rate Limit','Maximum Sensor Rate',
@@ -107,54 +103,6 @@ class PageOne(Frame):#login page
 
                  'Atrial Sensitivity','Ventricular Sensitivity','VRP','ARP','PVARP','Hysteresis',
                 'Rate Smoothing','Activity Threshold','Reaction Time','Response Factor','Recovery Time']
-
-
-
-                # string or array for data structure?
-
-
-
-                #all of the possible mode codes
-
-                #each mode is represented as an index in the parameters array
-
-
-
-                #to finish the rest of the codes
-
-                # global AOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-                # global AAI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-                # global VOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-                # global VVI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-                # global VDD=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-                # global DOO=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-                # global DDI=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-                # global DDD=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-                # global AOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-                # global AAIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-                # global VOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-                # global VVIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-                # global VDDR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-                # global DOOR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-                # global DDIR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-                # global DDDR=[1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
-
 
                 global PacingModesList
 
@@ -520,7 +468,6 @@ class PageThree(Frame):#postLoginScreen
 
                Button(self, text="Update Parameters", command=self.updateParameters).grid(row=2,column=1)
 
-               
 
                Label(self, text="Parameters",font=("Calibri",15)).grid(row=2, column=0,pady=20)
 
@@ -542,54 +489,57 @@ class PageThree(Frame):#postLoginScreen
 
         def getParams(*args):
 
+                global validParams
+
+                validParams = {
+                        'Lower Rate Limit':[str(x) for x in range(30,55,5)]+[str(x) for x in range(50,91,1)]+[str(x) for x in range(90,180,5)],
+                        'Upper Rate Limit':[str(x) for x in range(50,180,5)],
+                        'Maximum Sensor Rate':[str(x) for x in range(90,180,5)],
+                        'Atrial Amplitude':['Off']+[str(x*0.1) for x in range(5,36,1)]+[str(x*0.1) for x in range(35,75,5)],
+                        'Ventricular Amplitude':['Off']+[str(x*0.1) for x in range(5,33,1)]+[str(x*0.1) for x in range(35,75,5)],
+                        'Atrial Pulse Width':['0.05']+[str(x*0.1) for x in range(1,20,1)],
+                        'Ventricular Pusle Width':['0.05']+[str(x*0.1) for x in range(1,20,1)],
+                        'Atrial Sensitivity':['0.25','0.5','0.75']+[str(x*0.1) for x in range(10,105,5)],
+                        'Ventricular Sensitivity':['0.25','0.5','0.75']+[str(x*0.1) for x in range(10,105,5)],
+                        'VRP':[str(x) for x in range(150,510,10)],
+                        'ARP':[str(x) for x in range(150,510,10)],
+                        'PVARP':[str(x) for x in range(150,510,10)],
+                        'Hysteresis':['Off']+[str(x) for x in range(30,55,5)]+[str(x) for x in range(50,91,1)]+[str(x) for x in range(90,180,5)],
+                        'Rate Smoothing':['Off','3','6','9','12','15','18','21','25'],
+                        'Activity Threshold':['V-Low','Low','Med-Low','Med','Med-High','High','High'],
+                        'Reaction Time':[str(x) for x in range(10,60,10)],
+                        'Response Factor':[str(x) for x in range(1,17,1)],
+                        'Recovery Time':[str(x) for x in range(2,17,1)]
+                }
+
                 mode = dropVar.get()
 
                 maxarrayindex=len(userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)])-1
 
                 arrayindex=0
 
-
-
-                #instead of for loop, we want to read the label, find out which parameter, we're getting the value for, and then verify the value is within the bounds set in the documentation
-
-                #create helper function to validate based on input label text and the value retrieved
-
-
-
                 for i in range(1,len(form),2):
 
                         if(arrayindex>maxarrayindex):
-
                                 break
-
-                        userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)][arrayindex]= form[i].get()
-
-                        print(userDatabase[currentUser].parameters)
-
-                        arrayindex+=1
                         
-
-        
-
-        # def withinBounds(self,parameter,value):
-
-                
-
-
-
-
-
+                        elif(form[i].get() in validParams[form[i-1]['text']]):
+                                userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)][arrayindex]= form[i].get()
+                                arrayindex+=1
+                        else:
+                                 tkMessageBox.showwarning("Error","Invalid Parameter Values")
+                                 break
+                                
         def form(self,*args):
 
                 #global mode to reference
+        
 
                 global form
 
                 mode = dropVar.get()
 
                 rowIndex=5
-
-
 
                 if(form):
 
@@ -612,12 +562,9 @@ class PageThree(Frame):#postLoginScreen
                 arrayindex=0
 
                 for i in range(len(parameters)):#set new parameters
-
                         if(arrayindex>maxarrayindex):
 
                                 break
-
-
 
                         if(PacingModesList[mode][i]==1):
 
@@ -626,14 +573,9 @@ class PageThree(Frame):#postLoginScreen
                                 form[counter].grid(row=rowIndex,column=0)
 
                                 counter+=1
-
-
-
+                              
                                 form.append(Entry(self,textvariable=StringVar()))
-
                                 form[counter].grid(row=rowIndex,column=1)
-
-                                
 
                                 counter+=1
 
@@ -648,140 +590,156 @@ class PageThree(Frame):#postLoginScreen
                         File.write(userDatabase[i].getOutputData()+"\n")
                 File.close()
 
-                
-
         #update function so that the update adds to the dictionary then back to the file? or from the file then reinitialized to the dictionary
 
         def updateParameters(self,*args):#take string based on all of the values of the parameters
 
-        #dictionary for the mode for index of each mode based on the string
-
         #each value separated by commas
 
                 
-
                 #update userDatabase dictonary first
                 self.getParams()
 
-                
-
-
                 mode = dropVar.get()
-                print(userDatabase[currentUser].outputData)
-
-                
-
-                
-
-                
 
                 for i in userDatabase:
                         if(i==currentUser): # the current user is then appended to
                                 userDatabase[currentUser].outputData= i+","
 
                                 for mode in PacingModesList:#for loop not needed as we only need to transfer information for one mode at a tim
-                                        
-                                        if(mode=='AAT'):
-                                                userDatabase[currentUser].outputData+= "0,"
-                                                counter =0;
 
-                                                for k in PacingModesList['AAT']:
+
+
+
+                                        if(mode=='AAIR'):
+                                                userDatabase[currentUser].outputData+= mode+","       
+                                                counter=0
+
+                                                for k in PacingModesList['AAIR']:
 
                                                         if k==1:
-                                                                        
+                                                                
                                                                 userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[0][counter]+","
                                                                 counter+=1
 
                                                         else:
                                                                 userDatabase[currentUser].outputData+= "0,"
-                                                        
-                                                        
+                                        
+                                        elif(mode=='VVI'):
+                                                userDatabase[currentUser].outputData+= mode+","
+                                                counter=0
 
-                                                          # write all corresponding parameters to specific mode
-
-
-
-                                        elif(mode=='VVT'):
-                                                userDatabase[currentUser].outputData+= "1,"       
-                                                counter2 =0;
-
-                                                for k in PacingModesList['VVT']:
+                                                for k in PacingModesList['VVI']:
 
                                                         if k==1:
 
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[1][counter2]+","
-                                                                counter2+=1
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[1][counter]+","
+                                                                counter+=1
+
+                                                        else:
+                                                        
+                                                                userDatabase[currentUser].outputData+= "0,"
+
+                                        elif(mode=='AOOR'):
+                                                userDatabase[currentUser].outputData+= mode+","
+                                                counter=0
+
+                                                for k in PacingModesList['AOOR']:
+
+                                                        if k==1:
+                                                                        
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[2][counter]+","
+                                                                counter+=1
 
                                                         else:
                                                                 userDatabase[currentUser].outputData+= "0,"
-                                                        
-                                                        
+                                                          # write all corresponding parameters to specific mode 
+                                        
 
-                                                         
+                                                                
+                                        
+                                        elif(mode=='AOO'):
+                                                userDatabase[currentUser].outputData+= mode+","
+                                                counter=0
 
+                                                for k in PacingModesList['AOO']:
+
+                                                        if k==1:
+                                                                        
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[3][counter]+","
+                                                                counter+=1
+
+                                                        else:
+                                                                userDatabase[currentUser].outputData+= "0,"
+                                                          # write all corresponding parameters to specific mode
+
+                                        elif(mode=='VVIR'):
+                                                userDatabase[currentUser].outputData+= mode+","
+                                                counter=0
+
+                                                for k in PacingModesList['VVIR']:
+
+                                                        if k==1:
+
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[4][counter]+","
+                                                                counter+=1
+
+                                                        else:
+                                                        
+                                                                userDatabase[currentUser].outputData+= "0,"
+                                        
                                         elif(mode=='VOO'):
-
-                                                counter3 =0;
-                                                userDatabase[currentUser].outputData+= "2," 
+                                                userDatabase[currentUser].outputData+= mode+"," 
+                                                counter=0
 
                                                 for k in PacingModesList['VOO']:
 
                                                         if k==1:
 
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[2][counter3]+","
-                                                                counter3+=1
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[5][counter]+","
+                                                                counter+=1
 
                                                         else:
                                                         
                                                                 userDatabase[currentUser].outputData+= "0,"
+
+
+                                        elif(mode=='AAI'):
+                                                userDatabase[currentUser].outputData+= mode+","       
+                                                counter=0
+
+                                                for k in PacingModesList['AAI']:
+
+                                                        if k==1:
+
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[6][counter]+","
+                                                                counter+=1
+
+                                                        else:
+                                                                userDatabase[currentUser].outputData+= "0,"
+                                                                  
+
+                                        
+
+                                        
+                                        elif(mode=='VOOR'):
+                                                userDatabase[currentUser].outputData+= mode+"," 
+                                                counter=0
+
+                                                for k in PacingModesList['VOOR']:
+
+                                                        if k==1:
+
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[7][counter]+","
+                                                                counter+=1
+
+                                                        else:
                                                         
-                print userDatabase[currentUser].outputData          
+                                                                userDatabase[currentUser].outputData+= "0,"
+
+                                                 
                 self.outputToFile()
 
-                                                        
-     
-
-                        
-                        
-
-        
-                
-
-                        
-
-
-
-        #        file.writelines(["p_pacingMode"+" "+p_pacingMode+'\n',
-
-        #                         "p_pacingState"+" "+p_pacingState+'\n'
-
-        #                         "p_hysteresis"+" "+p_hysteresis+'\n'
-
-        #                         "p_hysteresisInterval"+" "+p_hysteresisInterval+'\n'
-
-        #                         "p_lowrateInterval"+" "+p_lowrateInterval+'\n'
-
-        #                         "p_vPaceAmp"+" "+p_vPaceAmp+'\n'
-
-        #                         "p_vPaceWidth"+" "+p_vPaceWidth+'\n'
-
-        #                         "p_vVRP"+" "+p_vVRP+'\n'])
-
-                
-
-               
-
-
-
-                win = Tk()
-
-                win.geometry('150x150')
-
-                win.title("Updated Paramters")
-
-                Label(win, text="Paramters Updated",font =("Calibri",15),fg="green").grid(row=15,column=5)
-
-               
 
 app = App()
 
