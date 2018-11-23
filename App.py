@@ -522,10 +522,6 @@ class PageThree(Frame):#postLoginScreen
 
                         if(arrayindex>maxarrayindex):
                                 break
-
-                        userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)][arrayindex]= form[i].get()
-
-                        arrayindex+=1
                         
                         elif(form[i].get() in validParams[form[i-1]['text']]):
                                 userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)][arrayindex]= form[i].get()
@@ -533,6 +529,8 @@ class PageThree(Frame):#postLoginScreen
                         else:
                                  tkMessageBox.showwarning("Error","Invalid Parameter Values")
                                  break
+
+                print(userDatabase[currentUser].parameters)
                                 
         def form(self,*args):
 
@@ -598,6 +596,8 @@ class PageThree(Frame):#postLoginScreen
 
         def updateParameters(self,*args):#take string based on all of the values of the parameters
 
+        #dictionary for the mode for index of each mode based on the string
+
         #each value separated by commas
 
                 
@@ -634,21 +634,12 @@ class PageThree(Frame):#postLoginScreen
                                                 counter=0
 
                                                 for k in PacingModesList['VVI']:
-<<<<<<< HEAD
 
                                                         if k==1:
 
                                                                 userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[1][counter]+","
                                                                 counter+=1
 
-=======
-
-                                                        if k==1:
-
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[1][counter]+","
-                                                                counter+=1
-
->>>>>>> f71e24f33410403d45c0e36b25fefeddbba05c02
                                                         else:
                                                         
                                                                 userDatabase[currentUser].outputData+= "0,"
@@ -663,18 +654,6 @@ class PageThree(Frame):#postLoginScreen
                                                                         
                                                                 userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[2][counter]+","
                                                                 counter+=1
-<<<<<<< HEAD
-
-                                                        else:
-                                                                userDatabase[currentUser].outputData+= "0,"
-                                                          # write all corresponding parameters to specific mode 
-                                        
-
-                                                                
-                                        
-                                        elif(mode=='AOO'):
-                                                userDatabase[currentUser].outputData+= mode+","
-=======
 
                                                         else:
                                                                 userDatabase[currentUser].outputData+= "0,"
@@ -717,86 +696,7 @@ class PageThree(Frame):#postLoginScreen
                                         
                                         elif(mode=='VOO'):
                                                 userDatabase[currentUser].outputData+= mode+"," 
->>>>>>> f71e24f33410403d45c0e36b25fefeddbba05c02
                                                 counter=0
-
-                                                for k in PacingModesList['AOO']:
-
-                                                        if k==1:
-<<<<<<< HEAD
-                                                                        
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[3][counter]+","
-=======
-
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[5][counter]+","
->>>>>>> f71e24f33410403d45c0e36b25fefeddbba05c02
-                                                                counter+=1
-
-                                                        else:
-                                                                userDatabase[currentUser].outputData+= "0,"
-<<<<<<< HEAD
-                                                          # write all corresponding parameters to specific mode
-
-                                        elif(mode=='VVIR'):
-                                                userDatabase[currentUser].outputData+= mode+","
-                                                counter=0
-
-                                                for k in PacingModesList['VVIR']:
-
-                                                        if k==1:
-
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[4][counter]+","
-                                                                counter+=1
-
-                                                        else:
-                                                        
-                                                                userDatabase[currentUser].outputData+= "0,"
-                                        
-                                        elif(mode=='VOO'):
-                                                userDatabase[currentUser].outputData+= mode+"," 
-                                                counter=0
-=======
-
-
-                                        elif(mode=='AAI'):
-                                                userDatabase[currentUser].outputData+= mode+","       
-                                                counter=0
-
-                                                for k in PacingModesList['AAI']:
-
-                                                        if k==1:
-
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[6][counter]+","
-                                                                counter+=1
-
-                                                        else:
-                                                                userDatabase[currentUser].outputData+= "0,"
-                                                                  
-
-                                        
-
-                                        
-                                        elif(mode=='VOOR'):
-                                                userDatabase[currentUser].outputData+= mode+"," 
-                                                counter=0
-
-                                                for k in PacingModesList['VOOR']:
-
-                                                        if k==1:
-
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[7][counter]+","
-                                                                counter+=1
-
-                                                        else:
-                                                        
-                                                                userDatabase[currentUser].outputData+= "0,"
-
-                                        
-                                        
-                                                        
-                #print userDatabase[currentUser].outputData          
-                self.outputToFile()
->>>>>>> f71e24f33410403d45c0e36b25fefeddbba05c02
 
                                                 for k in PacingModesList['VOO']:
 
@@ -821,7 +721,6 @@ class PageThree(Frame):#postLoginScreen
                                                                 userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[6][counter]+","
                                                                 counter+=1
 
-<<<<<<< HEAD
                                                         else:
                                                                 userDatabase[currentUser].outputData+= "0,"
                                                                   
@@ -834,8 +733,6 @@ class PageThree(Frame):#postLoginScreen
                                                 counter=0
 
                                                 for k in PacingModesList['VOOR']:
-=======
->>>>>>> f71e24f33410403d45c0e36b25fefeddbba05c02
 
                                                         if k==1:
 
@@ -853,3 +750,4 @@ class PageThree(Frame):#postLoginScreen
 app = App()
 
 app.mainloop()
+
