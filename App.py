@@ -415,6 +415,10 @@ class PageThree(Frame):#postLoginScreen
 
                form=[]
 
+               global currentform
+
+               currentform=[]
+
                def checkComm(self):
 
                        return False
@@ -488,7 +492,8 @@ class PageThree(Frame):#postLoginScreen
                         
                         if(form[i].get() in validParams[form[i-1]['text']]):
                                 userDatabase[currentUser].parameters[mode][parameters.index(form[i-1]['text'])]= form[i].get()
-                                # arrayindex+=1
+                                currentform[i].config(text=str(form[i].get()))
+
                         else:
                                 tkMessageBox.showwarning("Error","Invalid Parameter Values")
                                 break
@@ -499,6 +504,8 @@ class PageThree(Frame):#postLoginScreen
         
 
                 global form
+
+                global currentform
 
                 mode = dropVar.get()
 
@@ -511,21 +518,22 @@ class PageThree(Frame):#postLoginScreen
                                 form[i].grid_remove()
 
                         form=[]
+               
+                if(currentform):
+
+                        for i in range(len(currenform)):
+
+                                currentform[i].grid_remove()
+
+                        currentform=[]
 
                 counter =0
 
-                # maxarrayindex=17
-
-                # arrayindex=0
-
                 for i in range(len(parameters)):#set new parameters
-                        # if(arrayindex>maxarrayindex):
-                        #         break
 
                         if(PacingModesList[mode][i]==1):
  
                                 form.append(Label(self,text=parameters[i]))
-
                                 form[counter].grid(row=rowIndex,column=0)
 
                                 counter+=1
@@ -535,7 +543,27 @@ class PageThree(Frame):#postLoginScreen
 
                                 counter+=1
 
-                                # arrayindex+=1
+                                rowIndex+=1
+
+                rowIndex+=1
+                Label(self,text='Current Values',font=("Calibri",15)).grid(row=rowIndex,column=0,pady=20)
+                Button(self, text="Send to Pacemaker").grid(row=rowIndex,column=1)
+                rowIndex+=1
+                
+                counter =0
+                for i in range(len(parameters)):#set new parameters
+
+                        if(PacingModesList[mode][i]==1):
+                                
+                                currentform.append(Label(self,text=parameters[i]))
+                                currentform[counter].grid(row=rowIndex,column=0)
+
+                                counter+=1
+
+                                currentform.append(Label(self,text=str(userDatabase[currentUser].parameters[mode][i])))
+                                currentform[counter].grid(row=rowIndex,column=1)
+
+                                counter+=1
 
                                 rowIndex+=1
 
@@ -553,10 +581,8 @@ class PageThree(Frame):#postLoginScreen
 
         #each value separated by commas
                 
-                
                 #update userDatabase dictonary first
                 self.getParams()
-                print(userDatabase[currentUser].parameters)
 
                 mode = dropVar.get()
 
@@ -565,9 +591,6 @@ class PageThree(Frame):#postLoginScreen
                                 userDatabase[currentUser].outputData= i+","
 
                                 for mode in PacingModesList:#for loop not needed as we only need to transfer information for one mode at a time!!!
-
-
-
 
                                         if(mode=='AAIR'):
                                                 userDatabase[currentUser].outputData+= mode+","       
@@ -663,7 +686,6 @@ class PageThree(Frame):#postLoginScreen
                                                         
                                                         counter+=1
 
-
                                         elif(mode=='AAI'):
                                                 userDatabase[currentUser].outputData+= mode+","       
                                                 counter=0
@@ -679,10 +701,6 @@ class PageThree(Frame):#postLoginScreen
                                                                 userDatabase[currentUser].outputData+= "0,"
                                                         counter+=1
                                                                   
-
-                                        
-
-                                        
                                         elif(mode=='VOOR'):
                                                 userDatabase[currentUser].outputData+= mode+"," 
                                                 counter=0
