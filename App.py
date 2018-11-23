@@ -522,15 +522,10 @@ class PageThree(Frame):#postLoginScreen
 
                         if(arrayindex>maxarrayindex):
                                 break
-<<<<<<< HEAD
-=======
 
                         userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)][arrayindex]= form[i].get()
 
-                        #print(userDatabase[currentUser].parameters)
-
                         arrayindex+=1
->>>>>>> f71e24f33410403d45c0e36b25fefeddbba05c02
                         
                         elif(form[i].get() in validParams[form[i-1]['text']]):
                                 userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)][arrayindex]= form[i].get()
@@ -610,16 +605,6 @@ class PageThree(Frame):#postLoginScreen
                 self.getParams()
 
                 mode = dropVar.get()
-<<<<<<< HEAD
-=======
-                print(userDatabase[currentUser].parameters)
-
-                
-
-                
-
-                
->>>>>>> f71e24f33410403d45c0e36b25fefeddbba05c02
 
                 for i in userDatabase:
                         if(i==currentUser): # the current user is then appended to
