@@ -145,9 +145,13 @@ class PageOne(Frame):#login page
                         f = open("user_info.txt","r")
 
                         for line in f.readlines():
+                                print('line')
+                                print(line)
 
                                 loginInfo = line.split(" ")
-
+                                if(loginInfo[0]=="\n"):
+                                        continue
+                                print(loginInfo)
                                 username = loginInfo[0]
 
                                 password = loginInfo[1].strip("\n")
@@ -271,7 +275,7 @@ class PageTwo(Frame):#register
 
                 Label(self,text=" ").pack()
 
-                createNewUser = Button(self, text="Register Account", command= lambda: self.Register_User(username.get(),password.get()))
+                createNewUser = Button(self, text="Register Account", command=lambda: self.Register_User(username.get(),password.get()))
 
                 createNewUser.pack()
 
@@ -280,6 +284,9 @@ class PageTwo(Frame):#register
         def Register_User(self,username,password):
 
                 global userDatabase
+                
+                if(not username or not password):
+                        return
 
                 Login_User = username
 
@@ -289,9 +296,7 @@ class PageTwo(Frame):#register
 
                 with open("user_info.txt") as f:
 
-                         NumberofUsers = (len(f.readlines()))
-
-                        
+                         NumberofUsers = len(f.readlines())
 
                 if (NumberofUsers == 10):
 
@@ -345,14 +350,9 @@ class PageTwo(Frame):#register
 
                                return False
 
-
-
                 for char in password:
-
                         if not char.isdigit() and not char.isalpha():
-
                                tkMessageBox.showwarning("Error","Invalid Credentials.")
-
                                return False
 
                 return True#if successful, returns valid
