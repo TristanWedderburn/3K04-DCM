@@ -529,8 +529,6 @@ class PageThree(Frame):#postLoginScreen
                         else:
                                  tkMessageBox.showwarning("Error","Invalid Parameter Values")
                                  break
-
-                print(userDatabase[currentUser].parameters)
                                 
         def form(self,*args):
 
@@ -657,13 +655,8 @@ class PageThree(Frame):#postLoginScreen
 
                                                         else:
                                                                 userDatabase[currentUser].outputData+= "0,"
-                                                          # write all corresponding parameters to specific mode
-                                                print userDatabase[currentUser].parameters         
+                                                          # write all corresponding parameters to specific mode       
 
-                                        
-
-                                                                
-                                        
                                         elif(mode=='AOO'):
                                                 userDatabase[currentUser].outputData+= mode+","
                                                 counter=0
