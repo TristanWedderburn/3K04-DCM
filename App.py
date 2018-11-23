@@ -472,8 +472,8 @@ class PageThree(Frame):  # postLoginScreen
             'Lower Rate Limit': [str(x) for x in range(30, 55, 5)]+[str(x) for x in range(50, 91, 1)]+[str(x) for x in range(90, 180, 5)],
             'Upper Rate Limit': [str(x) for x in range(50, 180, 5)],
             'Maximum Sensor Rate': [str(x) for x in range(90, 180, 5)],
-            'Atrial Amplitude': ['Off']+[str(x*0.1) for x in range(5, 36, 1)]+[str(x*0.1) for x in range(35, 75, 5)],
-            'Ventricular Amplitude': ['Off']+[str(x*0.1) for x in range(5, 33, 1)]+[str(x*0.1) for x in range(35, 75, 5)],
+            'Atrial Amplitude': ['O']+[str(x*0.1) for x in range(5, 36, 1)]+[str(x*0.1) for x in range(35, 75, 5)],
+            'Ventricular Amplitude': ['O']+[str(x*0.1) for x in range(5, 33, 1)]+[str(x*0.1) for x in range(35, 75, 5)],
             'Atrial Pulse Width': ['0.05']+[str(x*0.1) for x in range(1, 20, 1)],
             'Ventricular Pusle Width': ['0.05']+[str(x*0.1) for x in range(1, 20, 1)],
             'Atrial Sensitivity': ['0.25', '0.5', '0.75']+[str(x*0.1) for x in range(10, 105, 5)],
@@ -482,7 +482,7 @@ class PageThree(Frame):  # postLoginScreen
             'ARP': [str(x) for x in range(150, 510, 10)],
             'PVARP': [str(x) for x in range(150, 510, 10)],
             'Hysteresis': ['Off']+[str(x) for x in range(30, 55, 5)]+[str(x) for x in range(50, 91, 1)]+[str(x) for x in range(90, 180, 5)],
-            'Rate Smoothing': ['Off', '3', '6', '9', '12', '15', '18', '21', '25'],
+            'Rate Smoothing': ['0', '3', '6', '9', '12', '15', '18', '21', '25'],
             'Activity Threshold': ['V-Low', 'Low', 'Med-Low', 'Med', 'Med-High', 'High', 'High'],
             'Reaction Time': [str(x) for x in range(10, 60, 10)],
             'Response Factor': [str(x) for x in range(1, 17, 1)],
@@ -503,48 +503,77 @@ class PageThree(Frame):  # postLoginScreen
                 break
 
     def serialComm(self, *args):
-        temp = dropVar.get()
+        mode = dropVar.get()
+        temp = mode
+        activity = userDatabase[currentUser].parameters[mode][14]
+        
         if temp == "AOO":
             MODE = 1
         elif temp == "VOO":
             MODE = 2
         elif temp == "AAI":
             MODE = 3
-        elif temp === "VVI":
+        elif temp == "VVI":
             MODE = 4
         elif temp == "AOOR":
             MODE = 5
-        elif temp ==  "AAIR":
+        elif temp ==  "VOOR":
             MODE = 6 
-        elif temp == "VVIR":
+        elif temp == "AAIR":
+            MODE = 7
+        else:
             MODE = 8
-        SYNC = 22
+        
+        if activity == "V-Low":
+            ACTIVITY_THRESHOLD = 1
+        elif activity == "Low":
+            ACTIVITY_THRESHOLD = 2
+        elif activity == "Low-Med":
+            ACTIVITY_THRESHOLD = 3
+        elif activity == "Med":
+            ACTIVITY_THRESHOLD = 4
+        elif activity == "Med-High":
+            ACTIVITY_THRESHOLD = 5
+        elif activity == "High":
+            ACTIVITY_THRESHOLD = 6
+        else:
+            ACTIVITY_THRESHOLD = 7
+        
+        
+        SYNC = 1
         FN_CODE = 1 # WILL CHANGE DEPENDING ON THE MODE, STILL GOTTA FIGURE THIS OUT FOR SUREZIES
-        strFormat = "bbbdddddddddddddbbbbb"
+        strFormat = "bbbdddddddddddddbbbbb" #SYNC, FN_CODE , PACE_MODE, LOWER_LIMIT, UPPER_LIMIT, MAX_SENS_RATE,A_AMPLITUDE, 
+        #V_AMPLITUDE, A_PULSEWIDTH, V_PULSEWIDTH, A_SENSITIVITY, VRP, ARP, PVARP, HYSTERESIS, RATESMOOTTHING,
+        #ACTIVITY_TRHESHOLD, REACTION_TIME, RESPONSE_FACTOR,RECOVERY_TIME
 
-        packed = pack(strFormat,
-            SYNC,
-            FN_CODE,
-            MODE,
-            userDatabase[currentUser].parameters[mode][0],
-            userDatabase[currentUser].parameters[mode][1],
-            userDatabase[currentUser].parameters[mode][2],
-            userDatabase[currentUser].parameters[mode][3],
-            userDatabase[currentUser].parameters[mode][4],
-            userDatabase[currentUser].parameters[mode][5],
-            userDatabase[currentUser].parameters[mode][6],
-            userDatabase[currentUser].parameters[mode][7],
-            userDatabase[currentUser].parameters[mode][8],
-            userDatabase[currentUser].parameters[mode][9],
-            userDatabase[currentUser].parameters[mode][10],
-            userDatabase[currentUser].parameters[mode][11],
-            userDatabase[currentUser].parameters[mode][12],
-            userDatabase[currentUser].parameters[mode][13],
-            userDatabase[currentUser].parameters[mode][14],
-            userDatabase[currentUser].parameters[mode][15],
-            userDatabase[currentUser].parameters[mode][16],
-            userDatabase[currentUser].parameters[mode][17])
-        print(packed)
+        # packed = pack(
+        #     strFormat,
+        #     SYNC,
+        #     FN_CODE,
+        #     MODE,
+        print(
+            float(userDatabase[currentUser].parameters[mode][0]),
+            float(userDatabase[currentUser].parameters[mode][1]),
+            float(userDatabase[currentUser].parameters[mode][2]),
+            float(userDatabase[currentUser].parameters[mode][3]),
+            float(userDatabase[currentUser].parameters[mode][4]),
+            float(userDatabase[currentUser].parameters[mode][5]),
+            float(userDatabase[currentUser].parameters[mode][6]),
+            float(userDatabase[currentUser].parameters[mode][7]),
+            float(userDatabase[currentUser].parameters[mode][8]),
+            float(userDatabase[currentUser].parameters[mode][9]),
+            float(userDatabase[currentUser].parameters[mode][10]),
+            float(userDatabase[currentUser].parameters[mode][11]),
+            float(userDatabase[currentUser].parameters[mode][12]),
+            int(userDatabase[currentUser].parameters[mode][13]),
+            ACTIVITY_THRESHOLD,
+            int(userDatabase[currentUser].parameters[mode][15])/10,
+            int(userDatabase[currentUser].parameters[mode][16]),
+            int(userDatabase[currentUser].parameters[mode][17])
+        )
+        # )
+        
+        # print(packed)
         # what we need to put here.
         # ser.write(1001)
         # figure out how to recive data
@@ -572,7 +601,7 @@ class PageThree(Frame):  # postLoginScreen
 
         if(currentform):
 
-            for i in range(len(currenform)):
+            for i in range(len(currentform)):
 
                 currentform[i].grid_remove()
 
