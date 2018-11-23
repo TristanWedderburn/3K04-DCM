@@ -172,8 +172,6 @@ class PageOne(Frame):#login page
 
                                 loginInfo = line.split(" ")
 
-                                print(loginInfo)
-
                                 username = loginInfo[0]
 
                                 password = loginInfo[1].strip("\n")
@@ -226,7 +224,7 @@ class PageOne(Frame):#login page
 
 class User():
 
-        def __init__(self,name,password,parameters={},ouputData=''):
+        def __init__(self,name,password,parameters={},outputData=''):
 
                 self.name = name#name string
                 
