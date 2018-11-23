@@ -161,6 +161,9 @@ class PageOne(Frame):#login page
                         f = open("parameters_info.txt","r")
 
                         for line in f.readlines():
+                                if line == '\n' :
+                                        continue
+
                                 user = line.split(',')
                                 name=str(user[0])
                                 userDatabase[name].parameters[user[1]] = user[2:20]
@@ -208,7 +211,7 @@ class User():
                 
                 self.password = password#password string
 
-                # self.outputData = outputData#string of output data
+                self.outputData = outputData#string of output data
 
                 self.parameters = {}
                 self.parameters['AOO']= ['0']*18
@@ -234,8 +237,8 @@ class User():
 
                 return self.parameters#returns object
         
-        # def getOutputData(self):
-        #         return self.outputData
+        def getOutputData(self):
+                return self.outputData
 
 
 
@@ -551,10 +554,11 @@ class PageThree(Frame):#postLoginScreen
         #dictionary for the mode for index of each mode based on the string
 
         #each value separated by commas
-
+                
                 
                 #update userDatabase dictonary first
                 self.getParams()
+                print(userDatabase[currentUser].parameters)
 
                 mode = dropVar.get()
 
@@ -575,11 +579,12 @@ class PageThree(Frame):#postLoginScreen
 
                                                         if k==1:
                                                                 
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[0][counter]+","
-                                                                counter+=1
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[mode][counter]+","
+                                                                
 
                                                         else:
                                                                 userDatabase[currentUser].outputData+= "0,"
+                                                        counter+=1
                                         
                                         elif(mode=='VVI'):
                                                 userDatabase[currentUser].outputData+= mode+","
@@ -589,7 +594,7 @@ class PageThree(Frame):#postLoginScreen
 
                                                         if k==1:
 
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[1][counter]+","
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[mode][counter]+","
                                                                 counter+=1
 
                                                         else:
@@ -604,7 +609,7 @@ class PageThree(Frame):#postLoginScreen
 
                                                         if k==1:
                                                                         
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[2][counter]+","
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[mode][counter]+","
                                                                 counter+=1
 
                                                         else:
@@ -619,7 +624,7 @@ class PageThree(Frame):#postLoginScreen
 
                                                         if k==1:
                                                                         
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[3][counter]+","
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[mode][counter]+","
                                                                 counter+=1
 
                                                         else:
@@ -634,7 +639,7 @@ class PageThree(Frame):#postLoginScreen
 
                                                         if k==1:
 
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[4][counter]+","
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[mode][counter]+","
                                                                 counter+=1
 
                                                         else:
@@ -649,12 +654,14 @@ class PageThree(Frame):#postLoginScreen
 
                                                         if k==1:
 
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[5][counter]+","
-                                                                counter+=1
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[mode][counter]+","
+                                                                
 
                                                         else:
                                                         
                                                                 userDatabase[currentUser].outputData+= "0,"
+                                                        
+                                                        counter+=1
 
 
                                         elif(mode=='AAI'):
@@ -665,7 +672,7 @@ class PageThree(Frame):#postLoginScreen
 
                                                         if k==1:
 
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[6][counter]+","
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[mode][counter]+","
                                                                 counter+=1
 
                                                         else:
@@ -683,7 +690,7 @@ class PageThree(Frame):#postLoginScreen
 
                                                         if k==1:
 
-                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[7][counter]+","
+                                                                userDatabase[currentUser].outputData+= userDatabase[currentUser].parameters[mode][counter]+","
                                                                 counter+=1
 
                                                         else:
