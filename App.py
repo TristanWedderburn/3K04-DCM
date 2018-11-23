@@ -145,13 +145,11 @@ class PageOne(Frame):#login page
                         f = open("user_info.txt","r")
 
                         for line in f.readlines():
-                                print('line')
-                                print(line)
-
                                 loginInfo = line.split(" ")
+                                
                                 if(loginInfo[0]=="\n"):
                                         continue
-                                print(loginInfo)
+
                                 username = loginInfo[0]
 
                                 password = loginInfo[1].strip("\n")
@@ -221,7 +219,7 @@ class User():
                 self.parameters['AAIR']= ['0']*18
                 self.parameters['VOOR']= ['0']*18
                 self.parameters['VVIR']= ['0']*18
-                
+
                #each index stores the parameters of the modes as a string?
 
         def getName(self):
@@ -336,7 +334,7 @@ class PageTwo(Frame):#register
 
                                         file.close()
 
-                                        userDatabase[username]= User(username,password,parameters)#create add user to the dictionary instance to reference for login
+                                        userDatabase[username]= User(username,password)#create add user to the dictionary instance to reference for login
 
                                         self.controller.show_frame(PageOne)#return to login page after registration
 
@@ -480,21 +478,17 @@ class PageThree(Frame):#postLoginScreen
 
                 mode = dropVar.get()
 
-                maxarrayindex=len(userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)])-1
-
-                arrayindex=0
+                # maxarrayindex=17
+                # arrayindex=0
 
                 for i in range(1,len(form),2):
-
-                        if(arrayindex>maxarrayindex):
-                                break
                         
-                        elif(form[i].get() in validParams[form[i-1]['text']]):
-                                userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)][arrayindex]= form[i].get()
-                                arrayindex+=1
+                        if(form[i].get() in validParams[form[i-1]['text']]):
+                                userDatabase[currentUser].parameters[mode][parameters.index(form[i-1]['text'])]= form[i].get()
+                                # arrayindex+=1
                         else:
-                                 tkMessageBox.showwarning("Error","Invalid Parameter Values")
-                                 break
+                                tkMessageBox.showwarning("Error","Invalid Parameter Values")
+                                break
                                 
         def form(self,*args):
 
@@ -519,23 +513,16 @@ class PageThree(Frame):#postLoginScreen
 
                 counter =0
 
-                #counter to see which value to use
+                # maxarrayindex=17
 
-                #have to sum across the whole parameters
-                
-                print(PacingModesList.keys().index(mode))
-                print(userDatabase[currentUser].parameters)
-                maxarrayindex=len(userDatabase[currentUser].parameters[PacingModesList.keys().index(mode)])-1
-
-                arrayindex=0
+                # arrayindex=0
 
                 for i in range(len(parameters)):#set new parameters
-                        if(arrayindex>maxarrayindex):
-
-                                break
+                        # if(arrayindex>maxarrayindex):
+                        #         break
 
                         if(PacingModesList[mode][i]==1):
-
+ 
                                 form.append(Label(self,text=parameters[i]))
 
                                 form[counter].grid(row=rowIndex,column=0)
@@ -547,7 +534,7 @@ class PageThree(Frame):#postLoginScreen
 
                                 counter+=1
 
-                                arrayindex+=1
+                                # arrayindex+=1
 
                                 rowIndex+=1
 
@@ -570,9 +557,6 @@ class PageThree(Frame):#postLoginScreen
                 self.getParams()
 
                 mode = dropVar.get()
-                
-                print('userDb')
-                print(userDatabase)
 
                 for i in userDatabase:
                         if(i==currentUser): # the current user is then appended to
