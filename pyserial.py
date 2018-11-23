@@ -15,6 +15,7 @@ dataSend = [0.0,55.0,6.0,22.5,8.3,300.5,8.2,22.5,446.3,11.1,5.99,0.73,9.4,3.1] #
 strFormat = "bbbdddddddddddddbbbbb" #SYNC, FN_CODE , PACE_MODE, LOWER_LIMIT, UPPER_LIMIT, MAX_SENS_RATE,A_AMPLITUDE, 
 #V_AMPLITUDE, A_PULSEWIDTH, V_PULSEWIDTH, A_SENSITIVITY, VRP, ARP, PVARP, HYSTERESIS, RATESMOOTTHING,
 #ACTIVITY_TRHESHOLD, REACTION_TIME, RESPONSE_FACTOR,RECOVERY_TIME
+'''
 packed = pack(strFormat,
     SYNC,
     FN_CODE,
@@ -37,11 +38,16 @@ packed = pack(strFormat,
     userDatabase[currentUser].parameters[mode][15],
     userDatabase[currentUser].parameters[mode][16],
     userDatabase[currentUser].parameters[mode][17])
+
+
+'''
+
+packed = pack('dddddddddddddbbbbb',35.0, 175.0, 0.0, 0.0, 2.1, 0.0, 1.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 7, 0, 0, 0)
 print(packed)
 # what we need to put here. 
 #ser.write(1001)
 # figure out how to recive data
 #ser.close()
 
-unpacked = unpack("b",packed)
-print(unpacked)
+#unpacked = unpack("b",packed)
+#print(unpacked)
