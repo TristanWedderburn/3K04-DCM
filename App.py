@@ -1,12 +1,15 @@
-from Tkinter import *
+from tkinter import *
 
-import tkMessageBox
+from tkinter import messagebox
 
 import os
 
 import serial
 import time
+
+
 from struct import *
+
 
 
 class App(Tk):
@@ -203,11 +206,11 @@ class PageOne(Frame):  # login page
 
             else:
 
-                tkMessageBox.showwarning("Error", "Invalid Credentials.")
+                messagebox.showwarning("Error", "Invalid Credentials.")
 
         else:
 
-            tkMessageBox.showwarning("Error", "Invalid Credentials.")
+            messagebox.showwarning("Error", "Invalid Credentials.")
 
 
 class User():
@@ -218,7 +221,7 @@ class User():
 
         self.password = password  # password string
 
-        self.outputData = outputData  # string of output data
+        self.outputData = ""  # string of output data
 
         self.parameters = {}
         self.parameters['AOO'] = ['0']*18
@@ -315,7 +318,7 @@ class PageTwo(Frame):  # register
 
         if (NumberofUsers == 10):
 
-            tkMessageBox.showwarning("Error", "Max User Limit Reached")
+            messagebox.showwarning("Error", "Max User Limit Reached")
 
             return
 
@@ -329,7 +332,7 @@ class PageTwo(Frame):  # register
 
                     # throw error message for invalid credentials
 
-                    tkMessageBox.showwarning(
+                    messagebox.showwarning(
                         "Error", "User with that username already in database.")
 
                 else:
@@ -355,7 +358,7 @@ class PageTwo(Frame):  # register
 
             else:
 
-                tkMessageBox.showwarning("Error", "Invalid Credentials.")
+                messagebox.showwarning("Error", "Invalid Credentials.")
 
                 return
 
@@ -366,13 +369,13 @@ class PageTwo(Frame):  # register
 
             if not char.isdigit() and not char.isalpha():
 
-                tkMessageBox.showwarning("Error", "Invalid Credentials.")
+                messagebox.showwarning("Error", "Invalid Credentials.")
 
                 return False
 
         for char in password:
             if not char.isdigit() and not char.isalpha():
-                tkMessageBox.showwarning("Error", "Invalid Credentials.")
+                messagebox.showwarning("Error", "Invalid Credentials.")
                 return False
 
         return True  # if successful, returns valid
@@ -499,14 +502,20 @@ class PageThree(Frame):  # postLoginScreen
                 currentform[i].config(text=str(form[i].get()))
 
             else:
-                tkMessageBox.showwarning("Error", "Invalid Parameter Values")
+                messagebox.showwarning("Error", "Invalid Parameter Values")
                 break
 
     def serialComm(self, *args):
+        ser = serial.Serial('/dev/tty.usbmodem000621000000')
         mode = dropVar.get()
+        arrayToSend = userDatabase[currentUser].parameters[mode]
         temp = mode
-        activity = userDatabase[currentUser].parameters[mode][14]
+        activity = arrayToSend[14]
+       
         
+
+        ACTIVITY_THRESHOLD=0
+
         if temp == "AOO":
             MODE = 1
         elif temp == "VOO":
@@ -524,6 +533,7 @@ class PageThree(Frame):  # postLoginScreen
         else:
             MODE = 8
         
+        
         if activity == "V-Low":
             ACTIVITY_THRESHOLD = 1
         elif activity == "Low":
@@ -538,43 +548,68 @@ class PageThree(Frame):  # postLoginScreen
             ACTIVITY_THRESHOLD = 6
         else:
             ACTIVITY_THRESHOLD = 7
-        
-        SYNC = 1
-        FN_CODE = 1 # WILL CHANGE DEPENDING ON THE MODE, STILL GOTTA FIGURE THIS OUT FOR SUREZIES
-        strFormat = "bbbdddddddddddddbbbbb" #SYNC, FN_CODE , PACE_MODE, LOWER_LIMIT, UPPER_LIMIT, MAX_SENS_RATE,A_AMPLITUDE, 
-        #V_AMPLITUDE, A_PULSEWIDTH, V_PULSEWIDTH, A_SENSITIVITY, VRP, ARP, PVARP, HYSTERESIS, RATESMOOTTHING,
-        #ACTIVITY_TRHESHOLD, REACTION_TIME, RESPONSE_FACTOR,RECOVERY_TIME
 
-        packed = pack(
-            strFormat,
-            SYNC,
-            FN_CODE,
-            MODE,
-            float(userDatabase[currentUser].parameters[mode][0]),
-            float(userDatabase[currentUser].parameters[mode][1]),
-            float(userDatabase[currentUser].parameters[mode][2]),
-            float(userDatabase[currentUser].parameters[mode][3]),
-            float(userDatabase[currentUser].parameters[mode][4]),
-            float(userDatabase[currentUser].parameters[mode][5]),
-            float(userDatabase[currentUser].parameters[mode][6]),
-            float(userDatabase[currentUser].parameters[mode][7]),
-            float(userDatabase[currentUser].parameters[mode][8]),
-            float(userDatabase[currentUser].parameters[mode][9]),
-            float(userDatabase[currentUser].parameters[mode][10]),
-            float(userDatabase[currentUser].parameters[mode][11]),
-            float(userDatabase[currentUser].parameters[mode][12]),
-            int(userDatabase[currentUser].parameters[mode][13]),
-            ACTIVITY_THRESHOLD,
-            int(userDatabase[currentUser].parameters[mode][15])/10,
-            int(userDatabase[currentUser].parameters[mode][16]),
-            int(userDatabase[currentUser].parameters[mode][17])
-        )
-        
-        # print(packed)
+        arrayToSend = [22,1,MODE]+arrayToSend
 
-        # ser.write(1001)
-        # figure out how to recive data
-        # ser.close()
+
+# # this is a tes for pyerial
+        counter=0
+
+        #number = 1024
+        #newByte = number.to_bytes(8,byteorder='big',signed=False) # first number is the length, second is big or small endians and the last is the singed or unsighed 
+
+        for i in range(3):
+            toSend =  arrayToSend[i].to_bytes(1,byteorder = "big", signed = False)
+            ser.write(toSend)
+            print(toSend)
+            counter+=1
+            print(arrayToSend[i])
+        
+        for i in range(3,6):
+            toSend =  int(arrayToSend[i]).to_bytes(8,byteorder = "big", signed = False)
+            ser.write(toSend)
+            print(toSend)
+            counter+=8
+            print(arrayToSend[i])
+        
+        for i in range(6,12):
+            toSend =  int(float(arrayToSend[i])*1000).to_bytes(8,byteorder = "big", signed = False)
+            ser.write(toSend)
+            print(toSend)
+            counter+=8
+            print(arrayToSend[i])
+        
+        for i in range(12,16):
+            toSend =  int(arrayToSend[i]).to_bytes(8,byteorder = "big", signed = False)
+            ser.write(toSend)
+            print(toSend)
+            counter+=8
+            print(arrayToSend[i])
+
+            
+        for i in range(16,21):
+            toSend =  int(arrayToSend[i]).to_bytes(1,byteorder = "big", signed = False)
+            ser.write(toSend)
+            print(toSend)
+            counter+=1
+            print(arrayToSend[i])
+            
+        print(counter)
+
+        
+
+# MSB 1101 LSB THIS IS BIG 13 
+# LSB 1101 MSB THIS IS 11 WITH SMALL 
+# hex highers number = 15, in binary 1111
+# 8 bits = 1 byte 
+# therefore 2 hex together = 1 byte 
+
+
+
+
+        #ser.write(bytes())
+        
+       
 
     def form(self, *args):
 
