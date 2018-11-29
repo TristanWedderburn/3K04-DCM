@@ -2,6 +2,7 @@
 import serial
 import time
 from struct import *
+from binascii import *
 #ser = serial.Serial('COM5',115200) # Change the comport and the Baudrate depending on specification
 
 #print(ser.name)
@@ -42,8 +43,11 @@ packed = pack(strFormat,
 
 '''
 
-packed = pack('dddddddddddddbbbbb',35.0, 175.0, 0.0, 0.0, 2.1, 0.0, 1.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 7, 0, 0, 0)
+#packed = pack('dddddddddddddbbbbb',35.0, 175.0, 0.0, 0.0, 2.1, 0.0, 1.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 7, 0, 0, 0)
+packed = pack("d",13.0)
 print(packed)
+print(hexlify("*"))
+print(unpack("d",packed))
 # what we need to put here. 
 #ser.write(1001)
 # figure out how to recive data
