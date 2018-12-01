@@ -30,7 +30,7 @@ class App(Tk):
 
         self.frames = {}
 
-        for F in (StartPage, PageOne, PageTwo, PageThree):
+        for F in (toSendPage, PageOne, PageTwo, PageThree):
 
             frame = F(container, self)
 
@@ -38,7 +38,7 @@ class App(Tk):
 
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame(StartPage)
+        self.show_frame(toSendPage)
 
     def show_frame(self, context):
 
@@ -47,7 +47,7 @@ class App(Tk):
         frame.tkraise()
 
 
-class StartPage(Frame):
+class toSendPage(Frame):
 
     def __init__(self, parent, controller):
 
@@ -136,7 +136,7 @@ class PageOne(Frame):  # login page
             usernameInput.get(), passwordInput.get())).pack()
 
         Button(self, text="Main Menu",
-               command=lambda: controller.show_frame(StartPage)).pack()
+               command=lambda: controller.show_frame(toSendPage)).pack()
 
     def next_page(self, next):
 
@@ -288,7 +288,7 @@ class PageTwo(Frame):  # register
         Label(self, text=" ").pack()
 
         ReturnToMenu = Button(self, text="Main Menu",
-                              command=lambda: controller.show_frame(StartPage))
+                              command=lambda: controller.show_frame(toSendPage))
 
         ReturnToMenu.pack()
 
@@ -506,7 +506,9 @@ class PageThree(Frame):  # postLoginScreen
                 break
 
     def serialComm(self, *args):
-        ser = serial.Serial('/dev/tty.usbmodem000621000000',115200, timeout=1)
+        ser = serial.Serial('/dev/tty.usbmodem000621000000',115200,serial.EIGHTBITS, serial.PARITY_NONE, serial.STOPBITS_ONE,timeout=None,dsrdtr=True)
+        time.sleep(2)
+
         mode = dropVar.get()
         arrayToSend = userDatabase[currentUser].parameters[mode]
         temp = mode
@@ -550,49 +552,61 @@ class PageThree(Frame):  # postLoginScreen
 
         arrayToSend = [22,1,MODE]+arrayToSend
 
-        counter=0
+        final = []
 
         #number = 1024
         #newByte = number.to_bytes(8,byteorder='big',signed=False) # first number is the length, second is big or small endians and the last is the singed or unsighed 
-       
-        while True:#continually send the array to the board
-            for i in range(3):
-                toSend =  arrayToSend[i].to_bytes(1,byteorder = "big", signed = False)
-                ser.write(toSend)
-                print(toSend)
-                counter+=1
-                print(arrayToSend[i])
-            
-            for i in range(3,6):
-                toSend =  int(arrayToSend[i]).to_bytes(8,byteorder = "big", signed = False)
-                ser.write(toSend)
-                print(toSend)
-                counter+=8
-                print(arrayToSend[i])
-            
-            for i in range(6,12):
-                toSend =  int(float(arrayToSend[i])*1000).to_bytes(8,byteorder = "big", signed = False)
-                ser.write(toSend)
-                print(toSend)
-                counter+=8
-                print(arrayToSend[i])
-            
-            for i in range(12,16):
-                toSend =  int(arrayToSend[i]).to_bytes(8,byteorder = "big", signed = False)
-                ser.write(toSend)
-                print(toSend)
-                counter+=8
-                print(arrayToSend[i])
 
-                
-            for i in range(16,21):
-                toSend =  int(arrayToSend[i]).to_bytes(1,byteorder = "big", signed = False)
-                ser.write(toSend)
-                print(toSend)
-                counter+=1
-                print(arrayToSend[i])
+        for i in range(3):
+            toSend =  arrayToSend[i].to_bytes(1,byteorder = "big", signed = False)
+            ser.write(toSend)
+            final.append(toSend)
             
-        print(counter)
+        for i in range(3,6):
+            toSend =  int(arrayToSend[i]).to_bytes(8,byteorder = "big", signed = False)
+
+            for j in range(8):
+                ser.write(toSend[j:j+1])
+                final.append(toSend[j:j+1])
+        
+        for i in range(6,12):
+            toSend =  int(float(arrayToSend[i])*1000).to_bytes(8,byteorder = "big", signed = False)
+
+            for j in range(8):
+                ser.write(toSend[j:j+1])
+                final.append(toSend[j:j+1])
+        
+        for i in range(12,16):
+            toSend =  int(arrayToSend[i]).to_bytes(8,byteorder = "big", signed = False)
+            
+            for j in range(8):
+                ser.write(toSend[j:j+1])
+                final.append(toSend[j:j+1])
+
+        for i in range(16,21):
+            toSend =  int(arrayToSend[i]).to_bytes(1,byteorder = "big", signed = False)
+            ser.write(toSend)
+            final.append(toSend)
+
+        print(final)
+        print(len(final))
+
+        # msg = ser.read(112) # read all characters in buffer
+        # print ("Message from board: ")
+        # print (msg)
+        # print(ser.in_waiting) 
+        # print(ser.read())
+        # print(ser.readline())
+
+        # while i<10:#continually send the array to the board
+        #     print(i)
+        #     ser.write(final)
+        #     time.sleep(1)
+        #     print(ser.read(ser.inWaiting()))
+        #     i+=1
+
+        # print(final)
+            
 
         
 # MSB 1101 LSB THIS IS BIG 13 
