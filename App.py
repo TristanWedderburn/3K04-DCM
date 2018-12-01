@@ -506,16 +506,15 @@ class PageThree(Frame):  # postLoginScreen
                 break
 
     def serialComm(self, *args):
-        ser = serial.Serial('/dev/tty.usbmodem000621000000')
+        ser = serial.Serial('/dev/tty.usbmodem000621000000',115200, timeout=1)
         mode = dropVar.get()
         arrayToSend = userDatabase[currentUser].parameters[mode]
         temp = mode
         activity = arrayToSend[14]
        
-        
-
         ACTIVITY_THRESHOLD=0
 
+        #set integer for mode
         if temp == "AOO":
             MODE = 1
         elif temp == "VOO":
@@ -533,7 +532,7 @@ class PageThree(Frame):  # postLoginScreen
         else:
             MODE = 8
         
-        
+        #set integer for activity threshold parameter
         if activity == "V-Low":
             ACTIVITY_THRESHOLD = 1
         elif activity == "Low":
@@ -551,66 +550,59 @@ class PageThree(Frame):  # postLoginScreen
 
         arrayToSend = [22,1,MODE]+arrayToSend
 
-
-# # this is a tes for pyerial
         counter=0
 
         #number = 1024
         #newByte = number.to_bytes(8,byteorder='big',signed=False) # first number is the length, second is big or small endians and the last is the singed or unsighed 
-
-        for i in range(3):
-            toSend =  arrayToSend[i].to_bytes(1,byteorder = "big", signed = False)
-            ser.write(toSend)
-            print(toSend)
-            counter+=1
-            print(arrayToSend[i])
-        
-        for i in range(3,6):
-            toSend =  int(arrayToSend[i]).to_bytes(8,byteorder = "big", signed = False)
-            ser.write(toSend)
-            print(toSend)
-            counter+=8
-            print(arrayToSend[i])
-        
-        for i in range(6,12):
-            toSend =  int(float(arrayToSend[i])*1000).to_bytes(8,byteorder = "big", signed = False)
-            ser.write(toSend)
-            print(toSend)
-            counter+=8
-            print(arrayToSend[i])
-        
-        for i in range(12,16):
-            toSend =  int(arrayToSend[i]).to_bytes(8,byteorder = "big", signed = False)
-            ser.write(toSend)
-            print(toSend)
-            counter+=8
-            print(arrayToSend[i])
-
+       
+        while True:#continually send the array to the board
+            for i in range(3):
+                toSend =  arrayToSend[i].to_bytes(1,byteorder = "big", signed = False)
+                ser.write(toSend)
+                print(toSend)
+                counter+=1
+                print(arrayToSend[i])
             
-        for i in range(16,21):
-            toSend =  int(arrayToSend[i]).to_bytes(1,byteorder = "big", signed = False)
-            ser.write(toSend)
-            print(toSend)
-            counter+=1
-            print(arrayToSend[i])
+            for i in range(3,6):
+                toSend =  int(arrayToSend[i]).to_bytes(8,byteorder = "big", signed = False)
+                ser.write(toSend)
+                print(toSend)
+                counter+=8
+                print(arrayToSend[i])
+            
+            for i in range(6,12):
+                toSend =  int(float(arrayToSend[i])*1000).to_bytes(8,byteorder = "big", signed = False)
+                ser.write(toSend)
+                print(toSend)
+                counter+=8
+                print(arrayToSend[i])
+            
+            for i in range(12,16):
+                toSend =  int(arrayToSend[i]).to_bytes(8,byteorder = "big", signed = False)
+                ser.write(toSend)
+                print(toSend)
+                counter+=8
+                print(arrayToSend[i])
+
+                
+            for i in range(16,21):
+                toSend =  int(arrayToSend[i]).to_bytes(1,byteorder = "big", signed = False)
+                ser.write(toSend)
+                print(toSend)
+                counter+=1
+                print(arrayToSend[i])
             
         print(counter)
 
         
-
 # MSB 1101 LSB THIS IS BIG 13 
 # LSB 1101 MSB THIS IS 11 WITH SMALL 
 # hex highers number = 15, in binary 1111
 # 8 bits = 1 byte 
 # therefore 2 hex together = 1 byte 
 
-
-
-
         #ser.write(bytes())
         
-       
-
     def form(self, *args):
 
         # global mode to reference
