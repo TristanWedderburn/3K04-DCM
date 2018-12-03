@@ -7,10 +7,8 @@ import os
 import serial
 import time
 
-
-from struct import *
-
-
+import struct
+# from struct import *
 
 class App(Tk):
 
@@ -438,17 +436,13 @@ class PageThree(Frame):  # postLoginScreen
             PageOne)).grid(row=0, column=1)
 
     # this section would have to be inside the serial communication loop
-    #        if checkComm(self) == True:
+        # while self.checkComm() == True:
+        #         Label(self,text = "Device is IS communicating with the DCM").grid(row=1, column=0,pady=20)
+        #         Label(self,text ="o",fg = "green").grid(row=1, column=1,pady=20)
 
-    #                Label(self,text = "Device is IS communicating with the DCM").grid(row=1, column=0,pady=20)
-
-    #                Label(self,text ="o",fg = "green").grid(row=1, column=1,pady=20)
-
-    #        elif checkComm(self) == False:
-
-    #                Label(self,text = "Device is NOT communicating with the DCM").grid(row=1, column=0,pady=20)
-
-    #                Label(self,text ="o",fg = "red").grid(row=1, column=1,pady=20)
+        # while self.checkComm() == False:
+        #         Label(self,text = "Device is NOT communicating with the DCM").grid(row=1, column=0,pady=20)
+        #         Label(self,text ="o",fg = "red").grid(row=1, column=1,pady=20)
 
         Button(self, text="Update Parameters",
                command=self.updateParameters).grid(row=2, column=1)
@@ -466,6 +460,13 @@ class PageThree(Frame):  # postLoginScreen
 
         OptionMenu(self, dropVar, *PacingModesList.keys(),
                    command=self.form).grid(row=4, column=1)
+
+    def checkComm(self):
+        try:
+            return serial.Serial('/dev/tty.usbmodem000621000000',115200).isOpen()
+        except (OSError, serial.SerialException):
+            pass
+        
 
     def getParams(*args):
 
@@ -507,6 +508,10 @@ class PageThree(Frame):  # postLoginScreen
 
     def serialComm(self, *args):
         ser = serial.Serial('/dev/tty.usbmodem000621000000',115200,serial.EIGHTBITS, serial.PARITY_NONE, serial.STOPBITS_ONE,timeout=None,dsrdtr=True)
+        
+        ser.isOpen()
+        print ("Serial port opened")
+
         time.sleep(2)
 
         mode = dropVar.get()
@@ -552,68 +557,18 @@ class PageThree(Frame):  # postLoginScreen
 
         arrayToSend = [22,1,MODE]+arrayToSend
 
-        final = []
-
-        #number = 1024
-        #newByte = number.to_bytes(8,byteorder='big',signed=False) # first number is the length, second is big or small endians and the last is the singed or unsighed 
-
-        for i in range(3):
-            toSend =  arrayToSend[i].to_bytes(1,byteorder = "big", signed = False)
-            ser.write(toSend)
-            final.append(toSend)
-            
-        for i in range(3,6):
-            toSend =  int(arrayToSend[i]).to_bytes(8,byteorder = "big", signed = False)
-
-            for j in range(8):
-                ser.write(toSend[j:j+1])
-                final.append(toSend[j:j+1])
-        
-        for i in range(6,12):
-            toSend =  int(float(arrayToSend[i])*1000).to_bytes(8,byteorder = "big", signed = False)
-
-            for j in range(8):
-                ser.write(toSend[j:j+1])
-                final.append(toSend[j:j+1])
-        
-        for i in range(12,16):
-            toSend =  int(arrayToSend[i]).to_bytes(8,byteorder = "big", signed = False)
-            
-            for j in range(8):
-                ser.write(toSend[j:j+1])
-                final.append(toSend[j:j+1])
-
+        for i in range(3,16):
+            arrayToSend[i]=float(arrayToSend[i])
+    
         for i in range(16,21):
-            toSend =  int(arrayToSend[i]).to_bytes(1,byteorder = "big", signed = False)
-            ser.write(toSend)
-            final.append(toSend)
+            arrayToSend[i]=int(arrayToSend[i])
 
-        # print(final)
-        # print(len(final))
-
-        # msg = ser.read(112) # read all characters in buffer
-        # print ("Message from board: ")
-        # print (msg)
-        # print(ser.in_waiting) 
-        # print(ser.read())
-        # print(ser.readline())
-
-        # while i<10:#continually send the array to the board
-        #     print(i)
-        #     ser.write(final)
-        #     time.sleep(1)
-        #     print(ser.read(ser.inWaiting()))
-        #     i+=1
-
-        # print(final)
-            
-# MSB 1101 LSB THIS IS BIG 13 
-# LSB 1101 MSB THIS IS 11 WITH SMALL 
-# hex highers number = 15, in binary 1111
-# 8 bits = 1 byte 
-# therefore 2 hex together = 1 byte 
-
-        #ser.write(bytes())
+        print(arrayToSend)
+        bytesToSend = struct.pack('>iiidddddddddddddiiiii',*arrayToSend)
+        print(bytesToSend)
+        ser.write(bytesToSend)
+        print ("outloop")
+        ser.close()
         
     def form(self, *args):
 
