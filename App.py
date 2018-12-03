@@ -588,8 +588,8 @@ class PageThree(Frame):  # postLoginScreen
             ser.write(toSend)
             final.append(toSend)
 
-        print(final)
-        print(len(final))
+        # print(final)
+        # print(len(final))
 
         # msg = ser.read(112) # read all characters in buffer
         # print ("Message from board: ")
