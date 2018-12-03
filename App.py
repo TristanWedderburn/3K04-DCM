@@ -507,7 +507,7 @@ class PageThree(Frame):  # postLoginScreen
                 break
 
     def serialComm(self, *args):
-        ser = serial.Serial('/dev/tty.usbmodem000621000000',115200,serial.EIGHTBITS, serial.PARITY_NONE, serial.STOPBITS_ONE,timeout=None,dsrdtr=True)
+        ser = serial.Serial('/dev/tty.usbmodem000621000000',115200)
         
         ser.isOpen()
         print ("Serial port opened")
@@ -563,9 +563,9 @@ class PageThree(Frame):  # postLoginScreen
         for i in range(16,21):
             arrayToSend[i]=int(arrayToSend[i])
 
-        print(arrayToSend)
-        bytesToSend = struct.pack('>iiidddddddddddddiiiii',*arrayToSend)
-        print(bytesToSend)
+        # print(arrayToSend)
+        bytesToSend = struct.pack('BBBdddddddddddddBBBBB',*arrayToSend)
+        # print(bytesToSend)
         ser.write(bytesToSend)
         print ("outloop")
         ser.close()
