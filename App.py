@@ -607,8 +607,6 @@ class PageThree(Frame):  # postLoginScreen
 
         # print(final)
             
-
-        
 # MSB 1101 LSB THIS IS BIG 13 
 # LSB 1101 MSB THIS IS 11 WITH SMALL 
 # hex highers number = 15, in binary 1111
