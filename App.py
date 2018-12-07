@@ -616,17 +616,20 @@ class PageThree(Frame):  # postLoginScreen
 
                 rowIndex += 1
 
+        #initialize headings for current values
         rowIndex += 1
-        Label(self, text='Current Values', font=("Calibri", 15)).grid(
-            row=rowIndex, column=0, pady=20)
-        Button(self, text="Send to Pacemaker",
-               command=self.serialComm).grid(row=rowIndex, column=1)
-        rowIndex += 1
-
         counter = 0
-        for i in range(len(parameters)):  # set new parameters
+        currentform.append(Label(self, text='Current Values', font=("Calibri", 15)))
+        currentform[counter].grid(row=rowIndex, column=0, pady=20)
+        counter += 1
+        currentform.append(Button(self, text="Send to Pacemaker", command=self.serialComm))
+        currentform[counter].grid(row=rowIndex, column=1)
+        counter += 1
+        rowIndex += 1
 
-            if(PacingModesList[mode][i] == 1):
+        for i in range(len(parameters)):  # set new parameters
+            
+            if(i>=2 and PacingModesList[mode][i-2] == 1):
 
                 currentform.append(Label(self, text=parameters[i]))
                 currentform[counter].grid(row=rowIndex, column=0)
