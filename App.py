@@ -45,7 +45,6 @@ class toSendPage(Frame):
         page_two = Button(self, text="Register", width="13", height="3", command=lambda: controller.show_frame(PageTwo))
         page_two.pack()
 
-
 class PageOne(Frame):  # login page
     def __init__(self, parent, controller):
         self.controller = controller
@@ -74,13 +73,13 @@ class PageOne(Frame):  # login page
         Entry(self, textvariable=passwordInput, show="*").pack()
         Label(self, text=" ").pack()
         Label(self, text=" ").pack()
-        Button(self, text="Log In", command=lambda: self.Login_User(usernameInput.get(), passwordInput.get())).pack()
+        Button(self, text="Log In", command=lambda: self.__Login_User(usernameInput.get(), passwordInput.get())).pack()
         Button(self, text="Main Menu", command=lambda: controller.show_frame(toSendPage)).pack()
 
     def next_page(self, next):
         self.controller.show_frame(next)
 
-    def getRef(self):
+    def __getRef(self):
         global userDatbase
         global outputData
         outputData = ""
@@ -122,8 +121,8 @@ class PageOne(Frame):  # login page
 
         return userDatabase
 
-    def Login_User(self, usernameInput, passwordInput):
-        userDatabase = self.getRef()
+    def __Login_User(self, usernameInput, passwordInput):
+        userDatabase = self.__getRef()
         if usernameInput in userDatabase:
             if userDatabase[usernameInput].getPassword() == passwordInput:
                 global currentUser
@@ -192,12 +191,12 @@ class PageTwo(Frame):  # register
 
         Label(self, text=" ").pack()
 
-        createNewUser = Button(self, text="Register Account", command=lambda: self.Register_User(username.get(), password.get()))
+        createNewUser = Button(self, text="Register Account", command=lambda: self.__Register_User(username.get(), password.get()))
         createNewUser.pack()
 
-    def Register_User(self, username, password):
+    def __Register_User(self, username, password):
         global userDatabase
-        Login_User = username
+        __Login_User = username
         Login_Password = password
 
         if(not username or not password):
@@ -212,7 +211,7 @@ class PageTwo(Frame):  # register
             messagebox.showwarning("Error", "Max User Limit Reached")
             return
         else:
-            if(self.validReg(username, password)):
+            if(self.__validReg(username, password)):
                 # check if that user is already in the database
                 if(username in userDatabase and userDatabase[username].getPassword() == password):
                     # throw error message for invalid credentials
@@ -222,7 +221,7 @@ class PageTwo(Frame):  # register
                     # fix the writing to the file
                     # function to turn all of the parameters indices to string then write to file
                     # add current user to the database file on next line
-                    file.write(Login_User + " "+Login_Password+"\n")
+                    file.write(__Login_User + " "+Login_Password+"\n")
                     file.close()
                     # create add user to the dictionary instance to reference for login
                     userDatabase[username] = User(username, password)
@@ -234,7 +233,7 @@ class PageTwo(Frame):  # register
                 return
 
     # check if the entered username and password fit the registration requirements for allowed characters
-    def validReg(self, username, password):
+    def __validReg(self, username, password):
         for char in username:
             if not char.isdigit() and not char.isalpha():
                 messagebox.showwarning("Error", "Invalid Credentials.")
@@ -246,8 +245,6 @@ class PageTwo(Frame):  # register
                 return False
         return True  # if successful, returns valid
     # dictionary for each user with first index as password
-
-# needs work for back end to add to userDatabase dictionary
 
 class PageThree(Frame):  # postLoginScreen
     def __init__(self, parent, controller):
@@ -277,8 +274,8 @@ class PageThree(Frame):  # postLoginScreen
         global currentform
         currentform = []
 
-        def checkComm(self):
-            return False
+        # def checkComm(self):
+        #     return False
 
         Button(self, text="Log Out", command=lambda: self.controller.show_frame(
             PageOne)).grid(row=0, column=1)
@@ -293,22 +290,22 @@ class PageThree(Frame):  # postLoginScreen
         #         Label(self,text ="o",fg = "red").grid(row=1, column=1,pady=20)
 
         Button(self, text="Update Parameters",
-               command=self.updateParameters).grid(row=2, column=1)
+               command=self.__updateParameters).grid(row=2, column=1)
 
         Label(self, text="Parameters", font=("Calibri", 15)).grid(row=2, column=0, pady=20)
         Label(self, text="p_pacingMode").grid(row=3, column=0)
         Label(self, text="PERMANENT").grid(row=3, column=1)
         Label(self, text="p_pacingState").grid(row=4, column=0)
         dropVar.set('   ')  # default choice
-        OptionMenu(self, dropVar, *PacingModesList.keys(), command=self.form).grid(row=4, column=1)
+        OptionMenu(self, dropVar, *PacingModesList.keys(), command=self.__form).grid(row=4, column=1)
 
-    def checkComm(self):
-        try:
-            return serial.Serial('/dev/tty.usbmodem000621000000',115200).isOpen()
-        except (OSError, serial.SerialException):
-            pass
+    # def checkComm(self):
+    #     try:
+    #         return serial.Serial('/dev/tty.usbmodem000621000000',115200).isOpen()
+    #     except (OSError, serial.SerialException):
+    #         pass
 
-    def getParams(*args):
+    def __getParams(*args):
         global validParams
         validParams = {
             'Lower Rate Limit': [str(x) for x in range(30, 55, 5)]+[str(x) for x in range(50, 91, 1)]+[str(x) for x in range(90, 180, 5)],
@@ -341,7 +338,7 @@ class PageThree(Frame):  # postLoginScreen
                 messagebox.showwarning("Error", "Invalid Parameter Values")
                 break
 
-    def serialComm(self, *args):
+    def __serialComm(self, *args):
         ser = serial.Serial('/dev/tty.usbmodem000621000000',115200)
 
         ser.isOpen()
@@ -403,7 +400,7 @@ class PageThree(Frame):  # postLoginScreen
         print ("outloop")
         ser.close()
         
-    def form(self, *args):
+    def __form(self, *args):
         # global mode to reference
         global form
         global currentform
@@ -442,7 +439,7 @@ class PageThree(Frame):  # postLoginScreen
         
         counter += 1
         
-        currentform.append(Button(self, text="Send to Pacemaker", command=self.serialComm))
+        currentform.append(Button(self, text="Send to Pacemaker", command=self.__serialComm))
         currentform[counter].grid(row=rowIndex, column=1)
         
         counter += 1
@@ -462,7 +459,7 @@ class PageThree(Frame):  # postLoginScreen
                 counter += 1
                 rowIndex += 1
 
-    def outputToFile(self, *args):
+    def __outputToFile(self, *args):
         File = open("parameters_info.txt", "w")
         for i in userDatabase:
             File.write(userDatabase[i].getOutputData()+"\n")
@@ -471,11 +468,11 @@ class PageThree(Frame):  # postLoginScreen
     # update function so that the update adds to the dictionary then back to the file? or from the file then reinitialized to the dictionary
 
     # take string based on all of the values of the parameters
-    def updateParameters(self, *args):
+    def __updateParameters(self, *args):
         # dictionary for the mode for index of each mode based on the string
         # each value separated by commas
         # update userDatabase dictonary first
-        self.getParams()
+        self.__getParams()
         mode = dropVar.get()
 
         for i in userDatabase:
@@ -566,7 +563,7 @@ class PageThree(Frame):  # postLoginScreen
                                 userDatabase[currentUser].outputData += "0,"
                             counter += 1
 
-        self.outputToFile()
+        self.__outputToFile()
 
 app = App()
 app.mainloop()
